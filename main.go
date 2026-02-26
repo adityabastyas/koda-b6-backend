@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -83,6 +84,23 @@ func main() {
 				Message: fmt.Sprintf("id kamu adalah %s", id),
 			})
 		}
+	})
+
+	r.PATCH("users/:id", func(ctx *gin.Context) {
+		i, err := strconv.Atoi(ctx.Param("id"))
+		if err != nil || i < 0 || i >= len(ListUser) {
+			ctx.JSON(404, Response{
+				Success: false,
+				Message: "user not fonud",
+			})
+			return
+		}
+
+		ctx.JSON(200, Response{
+			Success: true,
+			Message: "update succes",
+		})
+
 	})
 
 	r.Run("localhost:8888")
