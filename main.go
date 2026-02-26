@@ -70,7 +70,7 @@ func main() {
 
 	})
 
-	r.GET("users/:id", func(ctx *gin.Context) {
+	r.GET("/users/:id", func(ctx *gin.Context) {
 		id := ctx.Param("id")
 
 		if id == "9" {
@@ -86,7 +86,7 @@ func main() {
 		}
 	})
 
-	r.PATCH("users/:id", func(ctx *gin.Context) {
+	r.PATCH("/users/:id", func(ctx *gin.Context) {
 		i, err := strconv.Atoi(ctx.Param("id"))
 		if err != nil || i < 0 || i >= len(ListUser) {
 			ctx.JSON(404, Response{
@@ -96,11 +96,38 @@ func main() {
 			return
 		}
 
+		data := Users{}
+		if err := ctx.ShouldBindJSON(&data); err != nil {
+			ctx.JSON(400, Response{
+				Success: false,
+				Message: "invalid body",
+			})
+			return
+		}
+
+		ListUser[i] = data
 		ctx.JSON(200, Response{
 			Success: true,
 			Message: "update succes",
 		})
+	})
 
+	r.DELETE("/users/:id", func(ctx *gin.Context) {
+		i, err := strconv.Atoi(ctx.Param("id"))
+		if err != nil || i < 0 || i >= len(ListUser) {
+			ctx.JSON(400, Response{
+				Success: false,
+				Message: "user not found",
+			})
+			return
+		}
+
+		ListUser = append(ListUser[:i], ListUser[i+1:]...)
+
+		ctx.JSON(200, Response{
+			Success: true,
+			Message: "user deleted",
+		})
 	})
 
 	r.Run("localhost:8888")

@@ -9,5 +9,35 @@ Content-Type: application/json
 
 ###
 
-GET /users HTTP/1.1s
+POST /users HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+  "email": "halo@mail.com",
+  "password": "1111"
+}
+
+###
+
+GET /users HTTP/1.1
+Host: localhost:8888
+
+###
+
+PATCH /users/0 HTTP/1.1
+Host: localhost:8888
+
+{
+  "email": "updated@mail.com",
+  "password": "9999"
+}
+
+###
+
+DELETE /users/0 HTTP/1.1
+Host: localhost:8888
+
+###
+DELETE /users/ HTTP/1.1
 Host: localhost:8888
