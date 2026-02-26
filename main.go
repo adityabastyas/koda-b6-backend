@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"strings"
 
 	"github.com/gin-gonic/gin"
 )
@@ -128,6 +129,61 @@ func main() {
 			Success: true,
 			Message: "user deleted",
 		})
+	})
+
+	/// register
+	r.POST("/register", func(ctx *gin.Context) {
+		data := Users{}
+
+		if err := ctx.ShouldBindJSON(&data); err != nil {
+			ctx.JSON(400, Response{false, "invalid body", nil})
+			return
+		}
+
+		if strings.TrimSpace(data.Email) == "" {
+			ctx.JSON(400, Response{false, "email wajib diisi", nil})
+			return
+		}
+
+		if strings.TrimSpace(data.Password) == "" {
+			ctx.JSON(400, Response{false, "password wajib diisi", nil})
+			return
+		}
+
+		for _, u := range ListUser {
+			if u.Email == data.Email {
+				ctx.JSON(400, Response{false, "email sudah terdaftar", nil})
+				return
+			}
+		}
+
+		ListUser = append(ListUser, data)
+
+		ctx.JSON(200, Response{true, "register success", nil})
+
+	})
+
+	r.POST("/login", func(ctx *gin.Context) {
+		data := Users{}
+
+		if err := ctx.ShouldBindJSON(&data); err != nil {
+			ctx.JSON(400, Response{false, "invalid body", nil})
+			return
+		}
+
+		if data.Email == "" || data.Password == "" {
+			ctx.JSON(400, Response{false, "email & password wajib", nil})
+			return
+		}
+
+		for _, u := range ListUser {
+			if u.Email == data.Email && u.Password == data.Password {
+				ctx.JSON(200, Response{true, "login success", u})
+				return
+			}
+		}
+
+		ctx.JSON(401, Response{false, "email / password salah", nil})
 	})
 
 	r.Run("localhost:8888")

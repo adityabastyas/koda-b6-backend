@@ -27,6 +27,7 @@ Host: localhost:8888
 
 PATCH /users/0 HTTP/1.1
 Host: localhost:8888
+Content-Type: application/json
 
 {
   "email": "updated@mail.com",
@@ -38,6 +39,33 @@ Host: localhost:8888
 DELETE /users/0 HTTP/1.1
 Host: localhost:8888
 
-###
-DELETE /users/ HTTP/1.1
+
+### 
+POST /register HTTP/1.1
 Host: localhost:8888
+Content-Type: application/json
+
+{
+  "email": "adit@mail.com",
+  "password": "1234"
+}
+
+### 
+POST /login HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+  "email": "admin@mail.com",
+  "password": "1234"
+}
+
+### 
+POST /login HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+  "email": "admin@mail.com",
+  "password": "9999"
+}
