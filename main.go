@@ -26,6 +26,38 @@ func main() {
 		})
 	})
 
+	r.POST("/users", func(ctx *gin.Context) {
+		data := Users{}
+
+		err := ctx.ShouldBindJSON(&data)
+
+		if err != nil {
+			ctx.JSON(400, Response{
+				Success: false,
+				Message: "create user failed",
+			})
+			return
+		}
+
+		for x := range ListUser {
+			if ListUser[x].Email == data.Email {
+				ctx.JSON(400, Response{
+					Success: false,
+					Message: "email is ready",
+				})
+				return
+			}
+		}
+
+		ListUser = append(ListUser, data)
+
+		ctx.JSON(200, Response{
+			Success: true,
+			Message: "user created",
+		})
+
+	})
+
 	r.Run("localhost:8888")
 
 }
