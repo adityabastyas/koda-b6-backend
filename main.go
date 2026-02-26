@@ -1,5 +1,7 @@
 package main
 
+import "github.com/gin-gonic/gin"
+
 type Response struct {
 	Success bool   `json:"success"`
 	Message string `json:"message"`
@@ -14,5 +16,16 @@ type Users struct {
 var ListUser []Users
 
 func main() {
+	r := gin.Default()
+
+	r.GET("/users", func(ctx *gin.Context) {
+		ctx.JSON(200, Response{
+			Success: true,
+			Message: "Datas user",
+			Result:  ListUser,
+		})
+	})
+
+	r.Run("localhost:8888")
 
 }
