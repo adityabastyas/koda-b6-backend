@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"net/http"
 	"strconv"
 	"strings"
 
@@ -20,6 +21,20 @@ type Users struct {
 }
 
 var ListUser []Users
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		ctx.Header("Access-Control-Allow-Origin", "http:/localhost:5173")
+		ctx.Header("Access-Control-Allow-Headers", "Content-Type")
+
+		if ctx.Request.Method == "OPTIONS" {
+			ctx.Data(http.StatusOK, "", []byte(""))
+		} else {
+			ctx.Next()
+		}
+
+	}
+}
 
 func main() {
 	r := gin.Default()
