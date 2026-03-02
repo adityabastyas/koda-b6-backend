@@ -24,7 +24,7 @@ var ListUser []Users
 
 func corsMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		ctx.Header("Access-Control-Allow-Origin", "http:/localhost:5173")
+		ctx.Header("Access-Control-Allow-Origin", "http://localhost:5173")
 		ctx.Header("Access-Control-Allow-Headers", "Content-Type")
 
 		if ctx.Request.Method == "OPTIONS" {
@@ -36,8 +36,33 @@ func corsMiddleware() gin.HandlerFunc {
 	}
 }
 
+func authMiddleware() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+
+		token := ctx.GetHeader("Authorization")
+
+		if token == "" {
+			ctx.JSON(401, Response{
+				Success: false,
+				Message: "unauthorized",
+			})
+		} else if token != "1234" {
+			ctx.JSON(401, Response{
+				Success: false,
+				Message: "unauthorized",
+			})
+		} else {
+			ctx.Next()
+		}
+
+		ctx.Next()
+	}
+}
+
 func main() {
 	r := gin.Default()
+
+	r.Use(corsMiddleware())
 
 	r.GET("/", func(ctx *gin.Context) {
 		ctx.JSON(200, Response{
