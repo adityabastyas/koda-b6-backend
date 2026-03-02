@@ -215,7 +215,7 @@ func main() {
 			ctx.JSON(400, Response{false, "email & password wajib", nil})
 			return
 		}
-
+		fmt.Println(ListUser)
 		for _, u := range ListUser {
 			if u.Email == data.Email && u.Password == data.Password {
 				ctx.JSON(200, Response{true, "login success", u})
