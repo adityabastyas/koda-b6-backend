@@ -16,7 +16,7 @@ func AuthMiddleware() gin.HandlerFunc {
 				Message: "Unauthorized",
 			})
 			return
-		} else if 
+		}
 		ctx.Next()
 	}
 }
