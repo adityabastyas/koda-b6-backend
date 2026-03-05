@@ -5,7 +5,7 @@ package models
 // @description belajar swagger
 // @host localhost:8888
 // @BasePath /
-type Users struct {
+type User struct {
 	Email    string `json:"email" form:"email"`
 	Password string `json:"password" form:"password"`
 }
