@@ -13,24 +13,6 @@ import (
 	_ "koda-b6-backend1/docs"
 )
 
-type Response struct {
-	Success bool   `json:"success"`
-	Message string `json:"message"`
-	Result  any    `json:"result"`
-}
-
-// @title User API
-// @version 1.0
-// @description belajar swagger
-// @host localhost:8888
-// @BasePath /
-type Users struct {
-	Email    string `json:"email" form:"email"`
-	Password string `json:"password" form:"password"`
-}
-
-var ListUser []Users
-
 func corsMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		ctx.Header("Access-Control-Allow-Origin", "http://localhost:5173")
