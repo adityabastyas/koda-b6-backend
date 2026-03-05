@@ -11,12 +11,12 @@ func AuthMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		token := ctx.GetHeader("Authorization")
 
-		if token == "" {
+		if token == "" || token != "1234" {
 			ctx.JSON(http.StatusBadRequest, models.Response{
 				Message: "Unauthorized",
 			})
 			return
-		}
+		} else if 
 		ctx.Next()
 	}
 }
