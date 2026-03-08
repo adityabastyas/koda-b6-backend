@@ -15,4 +15,6 @@ func SetupRoutes(r *gin.Engine, userHandler *handlers.UserHandler) {
 	userGroup.Use(lib.AuthMiddleware())
 
 	userGroup.GET("", userHandler.GetAll)
+
+	userGroup.POST("/upload", userHandler.UploadPhoto)
 }
