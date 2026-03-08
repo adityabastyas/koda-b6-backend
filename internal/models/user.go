@@ -8,6 +8,7 @@ package models
 type User struct {
 	Email    string `json:"email" form:"email"`
 	Password string `json:"password" form:"password"`
+	Photo    string `json:"photo" form:"photo"`
 }
 
 type Response struct {
