@@ -56,3 +56,31 @@ func (h *UserHandler) GetAll(ctx *gin.Context) {
 	users := h.service.GetAll()
 	ctx.JSON(http.StatusOK, models.Response{Success: true, Message: "success", Result: users})
 }
+
+func (h *UserHandler) UploadPhoto(ctx *gin.Context) {
+	file, err := ctx.FormFile("file")
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "file tidak ditemukan",
+		})
+		return
+	}
+
+	path := "./uploads/" + file.Filename
+
+	err = ctx.SaveUploadedFile(file, path)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, models.Response{
+			Success: false,
+			Message: "gagal menyimpan file",
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "upload success",
+		Result:  path,
+	})
+}
