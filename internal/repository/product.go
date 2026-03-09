@@ -59,3 +59,10 @@ func (r *ProductRepository) Create(input models.ProductInput) error {
 	_, err := lib.DB.Exec(context.Background(), query, input.KategoryID, input.Name, input.Description, input.Price, input.ImageURL)
 	return err
 }
+
+func (r *ProductRepository) Update(id int, input models.ProductInput) error {
+	query := `UPDATE products SET kategory_id=$1, name=$2, description=$3, price=$4, image_url=$5 WHERE product_id=$6`
+
+	_, err := lib.DB.Exec(context.Background(), query, input.KategoryID, input.Name, input.Description, input.Price, input.ImageURL, id)
+	return err
+}
