@@ -55,3 +55,11 @@ func (s *ProductService) Update(id int, input models.ProductInput) error {
 
 	return s.repo.Update(id, input)
 }
+
+func (s *ProductService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+
+	return s.repo.Delete(id)
+}
