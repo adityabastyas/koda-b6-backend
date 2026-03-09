@@ -10,9 +10,15 @@ import (
 )
 
 func Container(c *gin.Engine) {
+	//user
 	userRepo := repository.NewUserRepository()
 	userService := service.NewUserService(userRepo)
 	userHandler := handlers.NewUserHandler(userService)
 
-	routes.SetupRoutes(c, userHandler)
+	//product
+	productRepo := repository.NewProductRepository()
+	productService := service.NewProductService(productRepo)
+	productHandler := handlers.NewProductHandler(productService)
+
+	routes.SetupRoutes(c, userHandler, productHandler)
 }
