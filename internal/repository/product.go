@@ -37,3 +37,18 @@ func (r *ProductRepository) GetAll() ([]models.Product, error) {
 
 	return products, nil
 }
+
+func (r *ProductRepository) GetByID(id int) (*models.Product, error) {
+	query := `SELECT product_id, kategory_id, name, description,price, image_url FROM products WHERE product_id = $1`
+
+	row := lib.DB.QueryRow(context.Background(), query, id)
+
+	var p models.Product
+	err := row.Scan(&p.ProductID, &p.KategoryID, &p.Name, &p.Description, &p.Price, &p.ImageURL)
+	if err != nil {
+		return nil, err
+	}
+
+	return &p, nil
+
+}
