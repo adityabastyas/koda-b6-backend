@@ -66,3 +66,11 @@ func (r *ProductRepository) Update(id int, input models.ProductInput) error {
 	_, err := lib.DB.Exec(context.Background(), query, input.KategoryID, input.Name, input.Description, input.Price, input.ImageURL, id)
 	return err
 }
+
+func (r *ProductRepository) Delete(id int) error {
+	query := `DELETE FROM products WHERE product_id = $1`
+
+	_, err := lib.DB.Exec(context.Background(), query, id)
+	return err
+
+}
