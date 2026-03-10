@@ -61,3 +61,10 @@ func (r *KategoryRepository) Create(input models.KategoryInput) error {
 	_, err := r.db.Exec(context.Background(), query, input.Name)
 	return err
 }
+
+func (r *KategoryRepository) Update(id int, input models.KategoryInput) error {
+	query := `UPDATE kategory SET name=$1 WHERE kategory_id=$2`
+
+	_, err := r.db.Exec(context.Background(), query, input.Name, id)
+	return err
+}
