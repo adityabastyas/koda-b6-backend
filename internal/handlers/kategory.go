@@ -86,3 +86,35 @@ func (h *KategoryHandler) Create(ctx *gin.Context) {
 		Message: "kategory berhasil ditambahkan",
 	})
 }
+
+func (h *KategoryHandler) Update(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "id harus berupa angka",
+		})
+		return
+	}
+
+	var input models.KategoryInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+	}
+
+	if err := h.service.Update(id, input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "kategory berhasil diupdate",
+	})
+}
