@@ -54,3 +54,10 @@ func (r *KategoryRepository) GetByID(id int) (*models.Kategory, error) {
 
 	return &kategory, nil
 }
+
+func (r *KategoryRepository) Create(input models.KategoryInput) error {
+	query := `INSERT INTO kategory (name) VALUES ($1)`
+
+	_, err := r.db.Exec(context.Background(), query, input.Name)
+	return err
+}
