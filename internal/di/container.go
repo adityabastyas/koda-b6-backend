@@ -7,9 +7,10 @@ import (
 	"koda-b6-backend1/internal/service"
 
 	"github.com/gin-gonic/gin"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func Container(c *gin.Engine) {
+func Container(c *gin.Engine, db *pgxpool.Pool) {
 	//user
 	userRepo := repository.NewUserRepository()
 	userService := service.NewUserService(userRepo)
@@ -20,5 +21,9 @@ func Container(c *gin.Engine) {
 	productService := service.NewProductService(productRepo)
 	productHandler := handlers.NewProductHandler(productService)
 
-	routes.SetupRoutes(c, userHandler, productHandler)
+	kategoryRepo := repository.NewKategoryRepository(db)
+	kategoryService := service.NewKategoryService(kategoryRepo)
+	kategoryHandler := handlers.NewKategoryHandler(kategoryService)
+
+	routes.SetupRoutes(c, userHandler, productHandler, kategoryHandler)
 }
