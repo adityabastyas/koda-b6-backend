@@ -27,3 +27,12 @@ func (s *KategoryService) GetByID(id int) (*models.Kategory, error) {
 
 	return s.repo.GetByID(id)
 }
+
+func (s *KategoryService) Create(input models.KategoryInput) error {
+	if input.Name == "" {
+		return errors.New("nama kategory tidak boleh kosong")
+	}
+
+	return s.repo.Create(input)
+
+}
