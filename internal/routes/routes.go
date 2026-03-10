@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler) {
+func SetupRoutes(r *gin.Engine, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler) {
 	r.POST("/register", userHandler.Register)
 	r.POST("/login", userHandler.Login)
 
@@ -26,4 +26,14 @@ func SetupRoutes(r *gin.Engine, userHandler *handlers.UserHandler, productHandle
 	productGroup.POST("", productHandler.Create)
 	productGroup.PATCH("/:id", productHandler.Update)
 	productGroup.DELETE("/:id", productHandler.Delete)
+
+	//kategory
+	kategoryGroup := r.Group("/kategorys")
+	kategoryGroup.GET("", kategoryHandler.GetAll)
+	kategoryGroup.GET("/:id", kategoryHandler.GetByID)
+	kategoryGroup.Use(lib.AuthMiddleware())
+	kategoryGroup.POST("", kategoryHandler.Create)
+	kategoryGroup.PATCH("/:id", kategoryHandler.Update)
+	kategoryGroup.DELETE("/:id", kategoryHandler.Delete)
+
 }
