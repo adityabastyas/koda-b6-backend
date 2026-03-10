@@ -47,3 +47,11 @@ func (s *KategoryService) Update(id int, input models.KategoryInput) error {
 
 	return s.Update(id, input)
 }
+
+func (s *KategoryService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+
+	return s.Delete(id)
+}
