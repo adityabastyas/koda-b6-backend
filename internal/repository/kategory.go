@@ -68,3 +68,10 @@ func (r *KategoryRepository) Update(id int, input models.KategoryInput) error {
 	_, err := r.db.Exec(context.Background(), query, input.Name, id)
 	return err
 }
+
+func (r *KategoryRepository) Delete(id int) error {
+	query := `DELETE FROM kategory WHERE kategory_id = $1`
+
+	_, err := r.db.Exec(context.Background(), query, id)
+	return err
+}
