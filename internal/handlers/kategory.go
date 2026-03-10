@@ -4,6 +4,7 @@ import (
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/service"
 	"net/http"
+	"strconv"
 
 	"github.com/gin-gonic/gin"
 )
@@ -18,7 +19,7 @@ func NewKategoryHandler(service *service.KategoryService) *KategoryHandler {
 	}
 }
 
-func (h *ProductHandler) GetAll(ctx *gin.Context) {
+func (h *KategoryHandler) GetAll(ctx *gin.Context) {
 	kategorys, err := h.service.GetAll()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.Response{
@@ -32,5 +33,32 @@ func (h *ProductHandler) GetAll(ctx *gin.Context) {
 		Success: true,
 		Message: "success",
 		Result:  kategorys,
+	})
+}
+
+func (h *KategoryHandler) GetByID(ctx *gin.Context) {
+
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "id harus berupa angka",
+		})
+		return
+	}
+
+	kategory, err := h.service.GetByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "success",
+		Result:  kategory,
 	})
 }
