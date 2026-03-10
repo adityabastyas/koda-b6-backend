@@ -34,5 +34,16 @@ func (s *KategoryService) Create(input models.KategoryInput) error {
 	}
 
 	return s.repo.Create(input)
+}
 
+func (s *KategoryService) Update(id int, input models.KategoryInput) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+
+	if input.Name == "" {
+		return errors.New("nama kategory tidak boleh kosong")
+	}
+
+	return s.Update(id, input)
 }
