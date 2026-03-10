@@ -62,3 +62,27 @@ func (h *KategoryHandler) GetByID(ctx *gin.Context) {
 		Result:  kategory,
 	})
 }
+
+func (h *KategoryHandler) Create(ctx *gin.Context) {
+	var input models.KategoryInput
+
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	if err := h.service.Create(input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "kategory berhasil ditambahkan",
+	})
+}
