@@ -16,27 +16,28 @@ func NewUserService(repo *repository.UserRepository) *UserService {
 	}
 }
 
-func (s *UserService) Register(user models.User) error {
-	if user.Email == "" || user.Password == "" {
+func (s *UserService) Register(input models.UserRegisterInput) error {
+	if input.Email == "" || input.Password == "" {
 		return errors.New("email & password tidak boleh kosong")
 	}
 
-	if s.repo.FindByEmail(user.Email) != nil {
+	user, _ := s.repo.FindByEmail(input.Email)
+	if user != nil {
 		return errors.New("email sudah terdaftar")
 	}
 
-	s.repo.Save(user)
+	return s.repo.Save(input)
 	return nil
 }
 
-func (s *UserService) Login(user models.User) (*models.User, error) {
-	x := s.repo.FindByEmail(user.Email)
-	if x == nil || x.Password != user.Password {
+func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
+	user, err := s.repo.FindByEmail(input.Email)
+	if err != nil || user.Password != input.Password {
 		return nil, errors.New("email atau password salah")
 	}
-	return x, nil
+	return user, nil
 }
 
-func (s *UserService) GetAll() []models.User {
+func (s *UserService) GetAll() ([]models.User, error) {
 	return s.repo.GetAll()
 }
