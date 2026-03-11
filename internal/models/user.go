@@ -1,14 +1,27 @@
 package models
 
-// @title User API
-// @version 1.0
-// @description belajar swagger
-// @host localhost:8888
-// @BasePath /
+import "time"
+
 type User struct {
-	Email    string `json:"email" form:"email"`
-	Password string `json:"password" form:"password"`
-	Photo    string `json:"photo" form:"photo"`
+	UserID     int       `json:"user_id" db:"user_id"`
+	FullName   string    `json:"full_name" db:"full_name"`
+	Email      string    `json:"email" db:"email"`
+	Password   string    `json:"password" db:"password"`
+	Address    string    `json:"address" db:"address"`
+	Phone      string    `json:"phone" db:"phone"`
+	ProfilePic string    `json:"profile_pic" db:"profile_pic"`
+	CreatedAt  time.Time `json:"created_at" db:"created_at"`
+}
+
+type UserRegisterInput struct {
+	FullName string `json:"full_name"`
+	Email    string `json:"email"`
+	Password string `json:"password"`
+}
+
+type UserLoginInput struct {
+	Email    string `json:"email"`
+	Password string `json:"password"`
 }
 
 type Response struct {
