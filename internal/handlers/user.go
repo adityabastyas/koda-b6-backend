@@ -19,6 +19,14 @@ func NewUserHandler(service *service.UserService) *UserHandler {
 	}
 }
 
+// Register handle POST /register
+// @Summary Register user baru
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param user body models.UserRegisterInput true "User Register Input"
+// @Success 200 {object} models.Response
+// @Router /register [post]
 func (h *UserHandler) Register(ctx *gin.Context) {
 	var input models.UserRegisterInput
 

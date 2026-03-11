@@ -1,4 +1,43 @@
+definitions:
+  models.Response:
+    properties:
+      message:
+        type: string
+      result: {}
+      success:
+        type: boolean
+    type: object
+  models.UserRegisterInput:
+    properties:
+      email:
+        type: string
+      full_name:
+        type: string
+      password:
+        type: string
+    type: object
 info:
   contact: {}
-paths: {}
+paths:
+  /register:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Register Input
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserRegisterInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Register user baru
+      tags:
+      - auth
 swagger: "2.0"

@@ -12,7 +12,7 @@ import (
 
 func Container(c *gin.Engine, db *pgxpool.Pool) {
 	//user
-	userRepo := repository.NewUserRepository()
+	userRepo := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepo)
 	userHandler := handlers.NewUserHandler(userService)
 
@@ -21,6 +21,7 @@ func Container(c *gin.Engine, db *pgxpool.Pool) {
 	productService := service.NewProductService(productRepo)
 	productHandler := handlers.NewProductHandler(productService)
 
+	//kategory
 	kategoryRepo := repository.NewKategoryRepository(db)
 	kategoryService := service.NewKategoryService(kategoryRepo)
 	kategoryHandler := handlers.NewKategoryHandler(kategoryService)
