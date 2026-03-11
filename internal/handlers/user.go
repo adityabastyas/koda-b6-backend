@@ -20,14 +20,14 @@ func NewUserHandler(service *service.UserService) *UserHandler {
 }
 
 func (h *UserHandler) Register(ctx *gin.Context) {
-	var user models.User
+	var input models.UserRegisterInput
 
-	if err := ctx.ShouldBindJSON(&user); err != nil {
+	if err := ctx.ShouldBindJSON(&input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{Success: false, Message: "invalid body", Result: nil})
 		return
 	}
 
-	if err := h.service.Register(user); err != nil {
+	if err := h.service.Register(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{Success: false, Message: err.Error(), Result: nil})
 		return
 	}
@@ -37,14 +37,14 @@ func (h *UserHandler) Register(ctx *gin.Context) {
 }
 
 func (h *UserHandler) Login(ctx *gin.Context) {
-	var user models.User
+	var input models.UserLoginInput
 
-	if err := ctx.ShouldBindJSON(&user); err != nil {
+	if err := ctx.ShouldBindJSON(&input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{Success: false, Message: "invalid body"})
 		return
 	}
 
-	results, err := h.service.Login(user)
+	results, err := h.service.Login(input)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, models.Response{Success: false, Message: err.Error()})
 		return
@@ -59,7 +59,11 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 }
 
 func (h *UserHandler) GetAll(ctx *gin.Context) {
-	users := h.service.GetAll()
+	users, err := h.service.GetAll()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, models.Response{Success: false, Message: err.Error()})
+		return
+	}
 	ctx.JSON(http.StatusOK, models.Response{Success: true, Message: "success", Result: users})
 }
 
