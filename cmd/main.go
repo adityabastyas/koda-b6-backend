@@ -4,21 +4,25 @@ import (
 	"koda-b6-backend1/internal/di"
 	"koda-b6-backend1/internal/lib"
 
+	_ "koda-b6-backend1/docs"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 func main() {
 
-	if err := godotenv.Load(); err != nil {
-		panic("file .env tidak ketemu")
-	}
+	godotenv.Load()
 
 	lib.ConnectDB()
 
 	r := gin.Default()
 
-	di.Container(r)
+	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	di.Container(r, lib.DB)
 
 	r.Run("localhost:8888")
 }
