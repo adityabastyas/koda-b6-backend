@@ -34,3 +34,11 @@ func (r *ForgotPasswordRepository) GetDataByEmailAndCode(email, code string) (*m
 
 	return &data, nil
 }
+
+func (r *ForgotPasswordRepository) DeleteByCode(code string) error {
+	query := `DELETE FROM forgot_password WHERE code = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, code)
+	return err
+
+}
