@@ -42,3 +42,10 @@ func (r *ForgotPasswordRepository) DeleteByCode(code string) error {
 	return err
 
 }
+
+func (r *ForgotPasswordRepository) CreateForgotRequest(input models.ForgotPasswordInput, code string) error {
+	query := `INSERT INTO forgot_password (email, code) VALUES ($1, $2)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.Email, code)
+	return err
+}
