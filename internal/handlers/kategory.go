@@ -19,6 +19,8 @@ func NewKategoryHandler(service *service.KategoryService) *KategoryHandler {
 	}
 }
 
+// @GetAll handle GET /kategorys
+// @Summary
 func (h *KategoryHandler) GetAll(ctx *gin.Context) {
 	kategorys, err := h.service.GetAll()
 	if err != nil {
