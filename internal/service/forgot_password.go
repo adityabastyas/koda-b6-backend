@@ -34,3 +34,20 @@ func (s *ForgotPasswordService) RequestForgotPassword(input models.ForgotPasswor
 
 	return code, nil
 }
+
+func (s *ForgotPasswordService) ResetPassword(input models.ForgotPasswordInput, email string) error {
+	data, err := s.forgotRepo.GetDataByEmailAndCode(email, input.Code)
+	if err != nil || data == nil {
+		return errors.New("code tidak valid atau sudah expired")
+	}
+
+	if err := s.userRepo.UpdatePassword(email, input.NewPassword); err != nil {
+		return errors.New("gagal update password")
+	}
+
+	if err := s.forgotRepo.DeleteByCode(input.Code); err != nil {
+		return errors.New("gagal menghapus code")
+	}
+
+	return nil
+}
