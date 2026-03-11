@@ -52,6 +52,16 @@ func (r *UserRepository) FindByEmail(email string) (*models.User, error) {
 	return &user, nil
 }
 
-func (r *UserRepository) Save(user models.User) {
-	r.users = append(r.users, user)
+func (r *UserRepository) Save(input models.UserRegisterInput) error {
+	query := `INSERT INTO users (full_name, email, password) VALUES ($1, $2, $3)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.FullName, input.Email, input.Password)
+	return err
+}
+
+func (r *UserRepository) UpdatePassword(email, newPassword string) error {
+	query := `UPDATE users SET password = $1 WHERE email = $2`
+
+	_, err := r.DB.Exec(context.Background(), query, newPassword, email)
+	return err
 }
