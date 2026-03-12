@@ -109,5 +109,38 @@ func (h *AuthHandler) RequestForgotPassword(ctx *gin.Context) {
 		Success: true,
 		Message: "code berhasil dikirim",
 	})
+}
 
+func (h *AuthHandler) ResetPassword(ctx *gin.Context) {
+	var input models.ResetPasswordInput
+
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	email := ctx.Query("email")
+	if email == "" {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "email tidak boleh kosong",
+		})
+		return
+	}
+
+	if err := h.forgotService.ResetPassword(input, email); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "password berhasil direset",
+	})
 }
