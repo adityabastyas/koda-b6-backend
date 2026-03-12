@@ -76,6 +76,13 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 	}})
 }
 
+// @Summary Request forgot password
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param input body models.ForgotPasswordInput true "Email input"
+// @Success 200 {object} models.Response
+// @Router /auth/forgot-password [post]
 func (h *AuthHandler) RequestForgotPassword(ctx *gin.Context) {
 	var input models.ForgotPasswordInput
 
