@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"koda-b6-backend1/internal/lib"
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/service"
@@ -73,4 +74,33 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 		"user":  results,
 		"token": token,
 	}})
+}
+
+func (h *AuthHandler) RequestForgotPassword(ctx *gin.Context) {
+	var input models.ForgotPasswordInput
+
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	code, err := h.forgotService.RequestForgotPassword(input)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	fmt.Println("OTP CODE", code)
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "code berhasil dikirim",
+	})
+
 }
