@@ -46,6 +46,13 @@ func (h *UserHandler) Register(ctx *gin.Context) {
 
 }
 
+// @Summary Login user
+// @Tags auth
+// @Accept json
+// @Produce json
+// @param user body models.UserLoginInput true "User Login Input"
+// @Success 200 {object} models.Response
+// @Router /auth/login [post]
 func (h *UserHandler) Login(ctx *gin.Context) {
 	var input models.UserLoginInput
 
