@@ -16,6 +16,13 @@ func Container(c *gin.Engine, db *pgxpool.Pool) {
 	userService := service.NewUserService(userRepo)
 	userHandler := handlers.NewUserHandler(userService)
 
+	// forgotpasswor
+	forgotRepo := repository.NewForgotPasswordRepository(db)
+	forgotService := service.NewForgotPasswordService(userRepo, forgotRepo)
+
+	//auth
+	authHandler := handlers.NewAuthHandler(userService, forgotService)
+
 	//product
 	productRepo := repository.NewProductRepository()
 	productService := service.NewProductService(productRepo)
@@ -26,5 +33,5 @@ func Container(c *gin.Engine, db *pgxpool.Pool) {
 	kategoryService := service.NewKategoryService(kategoryRepo)
 	kategoryHandler := handlers.NewKategoryHandler(kategoryService)
 
-	routes.SetupRoutes(c, userHandler, productHandler, kategoryHandler)
+	routes.SetupRoutes(c, authHandler, userHandler, productHandler, kategoryHandler)
 }
