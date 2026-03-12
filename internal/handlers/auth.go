@@ -30,7 +30,7 @@ func NewAuthHandler(userService *service.UserService, forgotService *service.For
 // @Param user body models.UserRegisterInput true "User Register Input"
 // @Success 200 {object} models.Response
 // @Router /register [post]
-func (h *UserHandler) Register(ctx *gin.Context) {
+func (h *AuthHandler) Register(ctx *gin.Context) {
 	var input models.UserRegisterInput
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
@@ -38,7 +38,7 @@ func (h *UserHandler) Register(ctx *gin.Context) {
 		return
 	}
 
-	if err := h.service.Register(input); err != nil {
+	if err := h.userService.Register(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{Success: false, Message: err.Error(), Result: nil})
 		return
 	}
@@ -54,7 +54,7 @@ func (h *UserHandler) Register(ctx *gin.Context) {
 // @param user body models.UserLoginInput true "User Login Input"
 // @Success 200 {object} models.Response
 // @Router /auth/login [post]
-func (h *UserHandler) Login(ctx *gin.Context) {
+func (h *AuthHandler) Login(ctx *gin.Context) {
 	var input models.UserLoginInput
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
@@ -62,7 +62,7 @@ func (h *UserHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	results, err := h.service.Login(input)
+	results, err := h.userService.Login(input)
 	if err != nil {
 		ctx.JSON(http.StatusUnauthorized, models.Response{Success: false, Message: err.Error()})
 		return

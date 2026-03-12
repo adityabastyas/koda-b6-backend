@@ -7,9 +7,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler) {
-	r.POST("/register", userHandler.Register)
-	r.POST("/login", userHandler.Login)
+func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler) {
+
+	authGroup := r.Group("/auth")
+	authGroup.POST("/register", authHandler.Register)
+	authGroup.POST("/login", authHandler.Login)
+	authGroup.POST("/forgot-password", authHandler.RequestForgotPassword)
+	authGroup.PATCH("/forgot-password", authHandler.ResetPassword)
 
 	userGroup := r.Group("/users")
 	userGroup.Use(lib.AuthMiddleware())
