@@ -111,6 +111,14 @@ func (h *AuthHandler) RequestForgotPassword(ctx *gin.Context) {
 	})
 }
 
+// @Summary Reset password dengan code OTP
+// @Tags auth
+// @Accept json
+// @Produce json
+// @Param email query string true "Email"
+// @Param input body models.ResetPasswordInput true "Reset Password Input"
+// @Success 200 {object} models.Response
+// @Router /auth/forgot-password [patch]
 func (h *AuthHandler) ResetPassword(ctx *gin.Context) {
 	var input models.ResetPasswordInput
 
