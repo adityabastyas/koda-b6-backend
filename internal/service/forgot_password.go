@@ -35,7 +35,7 @@ func (s *ForgotPasswordService) RequestForgotPassword(input models.ForgotPasswor
 	return code, nil
 }
 
-func (s *ForgotPasswordService) ResetPassword(input models.ForgotPasswordInput, email string) error {
+func (s *ForgotPasswordService) ResetPassword(input models.ResetPasswordInput, email string) error {
 	data, err := s.forgotRepo.GetDataByEmailAndCode(email, input.Code)
 	if err != nil || data == nil {
 		return errors.New("code tidak valid atau sudah expired")
