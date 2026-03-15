@@ -1,6 +1,7 @@
 package service
 
 import (
+	"errors"
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/repository"
 )
@@ -15,4 +16,11 @@ func NewPromoService(repo *repository.PromoRepository) *PromoService {
 
 func (s *PromoService) GetAll() ([]models.Promo, error) {
 	return s.repo.GetAll()
+}
+
+func (s *PromoService) GetByID(id int) (*models.Promo, error) {
+	if id <= 0 {
+		return nil, errors.New("id tidak valid")
+	}
+	return s.repo.GetByID(id)
 }
