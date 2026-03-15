@@ -145,6 +145,13 @@ func (h *DiscountHandler) Update(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus discount
+// @Tags discount
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Discount ID"
+// @Success 200 {object} models.Response
+// @Router /discounts/{id} [delete]
 func (h *DiscountHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

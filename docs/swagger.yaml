@@ -162,6 +162,25 @@ paths:
       tags:
       - discount
   /discounts/{id}:
+    delete:
+      parameters:
+      - description: Discount ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus discount
+      tags:
+      - discount
     get:
       parameters:
       - description: Discount ID
