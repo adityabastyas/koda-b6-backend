@@ -4,6 +4,17 @@ definitions:
       email:
         type: string
     type: object
+  models.PromoInput:
+    properties:
+      description:
+        type: string
+      discount_value:
+        type: integer
+      promo_type:
+        type: string
+      title:
+        type: string
+    type: object
   models.ResetPasswordInput:
     properties:
       code:
@@ -115,6 +126,28 @@ paths:
           schema:
             $ref: '#/definitions/models.Response'
       summary: Ambil semua promo
+      tags:
+      - promo
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Promo Input
+        in: body
+        name: promo
+        required: true
+        schema:
+          $ref: '#/definitions/models.PromoInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah promo baru
       tags:
       - promo
   /promos/{id}:

@@ -25,6 +25,19 @@ func (s *PromoService) GetByID(id int) (*models.Promo, error) {
 	return s.repo.GetByID(id)
 }
 
+func (s *PromoService) Update(id int, input models.PromoInput) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	if input.Title == "" {
+		return errors.New("title tidak boleh kosong")
+	}
+	if input.DiscountValue <= 0 {
+		return errors.New("discount value tidak valid")
+	}
+	return s.repo.Update(id, input)
+}
+
 func (s *PromoService) Create(input models.PromoInput) error {
 	if input.Title == "" {
 		return errors.New("title tidak boleh kosong")
