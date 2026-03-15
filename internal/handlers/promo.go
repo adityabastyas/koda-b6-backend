@@ -69,6 +69,14 @@ func (h *PromoHandler) GetByID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah promo baru
+// @Tags promo
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param promo body models.PromoInput true "Promo Input"
+// @Success 200 {object} models.Response
+// @Router /promos [post]
 func (h *PromoHandler) Create(ctx *gin.Context) {
 	var input models.PromoInput
 
