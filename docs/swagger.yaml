@@ -127,6 +127,20 @@ paths:
       summary: Login user
       tags:
       - auth
+  /carts:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Ambil semua cart
+      tags:
+      - cart
   /discounts:
     get:
       produces:

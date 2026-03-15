@@ -16,6 +16,12 @@ func NewCartHandler(service *service.CartService) *CartHandler {
 	return &CartHandler{service: service}
 }
 
+// @Summary Ambil semua cart
+// @Tags cart
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} models.Response
+// @Router /carts [get]
 func (h *CartHandler) GetAll(ctx *gin.Context) {
 	carts, err := h.service.GetAll()
 	if err != nil {
