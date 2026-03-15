@@ -37,3 +37,10 @@ func (s *PromoService) Create(input models.PromoInput) error {
 	}
 	return s.repo.Create(input)
 }
+
+func (s *PromoService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	return s.repo.Delete(id)
+}
