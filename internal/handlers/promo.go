@@ -16,6 +16,11 @@ func NewPromoHandler(service *service.PromoService) *PromoHandler {
 	return &PromoHandler{service: service}
 }
 
+// @Summary Ambil semua promo
+// @Tags promo
+// @Produce json
+// @Success 200 {object} models.Response
+// @Router /promos [get]
 func (h *PromoHandler) GetAll(ctx *gin.Context) {
 	promos, err := h.service.GetAll()
 	if err != nil {
