@@ -144,6 +144,13 @@ func (h *PromoHandler) Update(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus promo
+// @Tags promo
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Promo ID"
+// @Success 200 {object} models.Response
+// @Router /promos/{id} [delete]
 func (h *PromoHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
