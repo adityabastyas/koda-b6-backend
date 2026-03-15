@@ -51,6 +51,13 @@ func (r *DiscountRepository) GetByID(id int) (*models.Discount, error) {
 	return &discount, nil
 }
 
+func (r *DiscountRepository) Create(input models.DiscountInput) error {
+	query := `INSERT INTO discount (product_id, flash_sale, description, discount_rate) VALUES ($1, $2, $3, $4)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.FlashSale, input.Description, input.DiscountRate)
+	return err
+}
+
 func (r *DiscountRepository) Update(id int, input models.DiscountInput) error {
 	query := `UPDATE discount SET product_id=$1, flash_sale=$2, description=$3, discount_rate=$4 WHERE discount_id=$5`
 
