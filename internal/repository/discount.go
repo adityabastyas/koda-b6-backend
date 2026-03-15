@@ -33,3 +33,20 @@ func (r *DiscountRepository) GetAll() ([]models.Discount, error) {
 
 	return discounts, nil
 }
+
+func (r *DiscountRepository) GetByID(id int) (*models.Discount, error) {
+	query := `SELECT discount_id, product_id, flash_sale, description, discount_rate FROM discount WHERE discount_id = $1`
+
+	rows, err := r.DB.Query(context.Background(), query, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	discount, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[models.Discount])
+	if err != nil {
+		return nil, err
+	}
+
+	return &discount, nil
+}
