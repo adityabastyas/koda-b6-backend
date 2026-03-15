@@ -35,3 +35,16 @@ func (s *DiscountService) Create(input models.DiscountInput) error {
 	}
 	return s.repo.Create(input)
 }
+
+func (s *DiscountService) Update(id int, input models.DiscountInput) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+	if input.DiscountRate <= 0 {
+		return errors.New("discount rate tidak valid")
+	}
+	return s.repo.Update(id, input)
+}
