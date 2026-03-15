@@ -116,6 +116,18 @@ paths:
       summary: Login user
       tags:
       - auth
+  /discounts:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua discount
+      tags:
+      - discount
   /discounts/{id}:
     get:
       parameters:

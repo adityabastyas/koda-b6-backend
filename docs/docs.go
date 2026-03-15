@@ -119,6 +119,25 @@ const docTemplate = `{
                 }
             }
         },
+        "/discounts": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "discount"
+                ],
+                "summary": "Ambil semua discount",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/discounts/{id}": {
             "get": {
                 "produces": [

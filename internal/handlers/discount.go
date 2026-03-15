@@ -38,6 +38,12 @@ func (h *DiscountHandler) GetAll(ctx *gin.Context) {
 	})
 }
 
+// @Summary Ambil 1 discount berdasarkan ID
+// @Tags discount
+// @Produce json
+// @Param id path int true "Discount ID"
+// @Success 200 {object} models.Response
+// @Router /discounts/{id} [get]
 func (h *DiscountHandler) GetByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
