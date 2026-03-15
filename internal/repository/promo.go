@@ -47,3 +47,10 @@ func (r *PromoRepository) Update(id int, input models.PromoInput) error {
 	_, err := r.DB.Exec(context.Background(), query, input.Title, input.Description, input.PromoType, input.DiscountValue, id)
 	return err
 }
+
+func (r *PromoRepository) Delete(id int) error {
+	query := `DELETE FROM promo WHERE promo_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, id)
+	return err
+}
