@@ -48,3 +48,10 @@ func (s *DiscountService) Update(id int, input models.DiscountInput) error {
 	}
 	return s.repo.Update(id, input)
 }
+
+func (s *DiscountService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	return s.repo.Delete(id)
+}
