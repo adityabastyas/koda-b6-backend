@@ -24,3 +24,10 @@ func (s *CartService) GetByUserID(userID int) (*models.Cart, error) {
 	}
 	return s.repo.GetByUserID(userID)
 }
+
+func (s *CartService) CreateCart(userID int) error {
+	if userID <= 0 {
+		return errors.New("user id tidak valid")
+	}
+	return s.repo.CreateCart(userID)
+}
