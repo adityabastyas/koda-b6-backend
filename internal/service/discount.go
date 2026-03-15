@@ -25,3 +25,13 @@ func (s *DiscountService) GetByID(id int) (*models.Discount, error) {
 	}
 	return s.repo.GetByID(id)
 }
+
+func (s *DiscountService) Create(input models.DiscountInput) error {
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+	if input.DiscountRate <= 0 {
+		return errors.New("discount rate tidak valid")
+	}
+	return s.repo.Create(input)
+}
