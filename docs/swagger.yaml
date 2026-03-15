@@ -1,4 +1,15 @@
 definitions:
+  models.DiscountInput:
+    properties:
+      description:
+        type: string
+      discount_rate:
+        type: integer
+      flash_sale:
+        type: boolean
+      product_id:
+        type: integer
+    type: object
   models.ForgotPasswordInput:
     properties:
       email:
@@ -126,6 +137,28 @@ paths:
           schema:
             $ref: '#/definitions/models.Response'
       summary: Ambil semua discount
+      tags:
+      - discount
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Discount Input
+        in: body
+        name: discount
+        required: true
+        schema:
+          $ref: '#/definitions/models.DiscountInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah discount baru
       tags:
       - discount
   /discounts/{id}:

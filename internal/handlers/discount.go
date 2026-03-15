@@ -70,6 +70,14 @@ func (h *DiscountHandler) GetByID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah discount baru
+// @Tags discount
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param discount body models.DiscountInput true "Discount Input"
+// @Success 200 {object} models.Response
+// @Router /discounts [post]
 func (h *DiscountHandler) Create(ctx *gin.Context) {
 	var input models.DiscountInput
 

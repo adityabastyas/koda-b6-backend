@@ -136,6 +136,42 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "discount"
+                ],
+                "summary": "Tambah discount baru",
+                "parameters": [
+                    {
+                        "description": "Discount Input",
+                        "name": "discount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.DiscountInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
             }
         },
         "/discounts/{id}": {
@@ -358,6 +394,23 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "models.DiscountInput": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "discount_rate": {
+                    "type": "integer"
+                },
+                "flash_sale": {
+                    "type": "boolean"
+                },
+                "product_id": {
+                    "type": "integer"
+                }
+            }
+        },
         "models.ForgotPasswordInput": {
             "type": "object",
             "properties": {
