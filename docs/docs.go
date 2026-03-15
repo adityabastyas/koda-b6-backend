@@ -200,6 +200,49 @@ const docTemplate = `{
                         }
                     }
                 }
+            },
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "discount"
+                ],
+                "summary": "Edit discount",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Discount ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Discount Input",
+                        "name": "discount",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.DiscountInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
             }
         },
         "/promos": {

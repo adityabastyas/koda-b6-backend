@@ -179,6 +179,33 @@ paths:
       summary: Ambil 1 discount berdasarkan ID
       tags:
       - discount
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Discount ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Discount Input
+        in: body
+        name: discount
+        required: true
+        schema:
+          $ref: '#/definitions/models.DiscountInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Edit discount
+      tags:
+      - discount
   /promos:
     get:
       produces:

@@ -103,6 +103,15 @@ func (h *DiscountHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Edit discount
+// @Tags discount
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Discount ID"
+// @Param discount body models.DiscountInput true "Discount Input"
+// @Success 200 {object} models.Response
+// @Router /discounts/{id} [patch]
 func (h *DiscountHandler) Update(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
