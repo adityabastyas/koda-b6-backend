@@ -40,3 +40,10 @@ func (r *PromoRepository) Create(input models.PromoInput) error {
 	_, err := r.DB.Exec(context.Background(), query, input.Title, input.Description, input.PromoType, input.DiscountValue)
 	return err
 }
+
+func (r *PromoRepository) Update(id int, input models.PromoInput) error {
+	query := `UPDATE promo SET title=$1, description=$2, promo_type=$3, discount_value=$4 WHERE promo_id=$5`
+
+	_, err := r.DB.Exec(context.Background(), query, input.Title, input.Description, input.PromoType, input.DiscountValue, id)
+	return err
+}
