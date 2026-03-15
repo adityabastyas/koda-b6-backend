@@ -116,6 +116,24 @@ paths:
       summary: Login user
       tags:
       - auth
+  /discounts/{id}:
+    get:
+      parameters:
+      - description: Discount ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil 1 discount berdasarkan ID
+      tags:
+      - discount
   /promos:
     get:
       produces:
