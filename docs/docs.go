@@ -138,6 +138,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/promos/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "promo"
+                ],
+                "summary": "Ambil 1 promo berdasarkan ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Promo ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/register": {
             "post": {
                 "consumes": [
