@@ -57,3 +57,10 @@ func (r *DiscountRepository) Update(id int, input models.DiscountInput) error {
 	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.FlashSale, input.Description, input.DiscountRate, id)
 	return err
 }
+
+func (r *DiscountRepository) Delete(id int) error {
+	query := `DELETE FROM discount WHERE discount_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, id)
+	return err
+}
