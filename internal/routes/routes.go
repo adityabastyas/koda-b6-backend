@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler) {
+func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler) {
 
 	authGroup := r.Group("/auth")
 	authGroup.POST("/register", authHandler.Register)
@@ -39,5 +39,14 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	kategoryGroup.POST("", kategoryHandler.Create)
 	kategoryGroup.PATCH("/:id", kategoryHandler.Update)
 	kategoryGroup.DELETE("/:id", kategoryHandler.Delete)
+
+	// promo routes
+	promoGroup := r.Group("/promos")
+	promoGroup.GET("", promoHandler.GetAll)
+	promoGroup.GET("/:id", promoHandler.GetByID)
+	promoGroup.Use(lib.AuthMiddleware())
+	promoGroup.POST("", promoHandler.Create)
+	promoGroup.PATCH("/:id", promoHandler.Update)
+	promoGroup.DELETE("/:id", promoHandler.Delete)
 
 }
