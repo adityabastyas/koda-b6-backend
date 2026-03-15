@@ -18,7 +18,7 @@ func NewPromoRepository(db *pgx.Conn) *PromoRepository {
 }
 
 func (r *PromoRepository) GetAll() ([]models.Promo, error) {
-	query := `SELECT promo_id, title, description, promo_type, discount_value, FROM promo`
+	query := `SELECT promo_id, title, description, promo_type, discount_value FROM promo`
 
 	rows, err := r.DB.Query(context.Background(), query)
 	if err != nil {
@@ -32,4 +32,11 @@ func (r *PromoRepository) GetAll() ([]models.Promo, error) {
 	}
 
 	return promos, nil
+}
+
+func (r *PromoRepository) Create(input models.PromoInput) error {
+	query := `INSERT INTO promo (title, description, promo_type, discount_value) VALUES ($1, $2, $3, $4)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.Title, input.Description, input.PromoType, input.DiscountValue)
+	return err
 }
