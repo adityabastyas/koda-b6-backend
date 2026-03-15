@@ -49,3 +49,10 @@ func (r *CartRepository) GetByUserID(userID int) (*models.Cart, error) {
 
 	return &cart, nil
 }
+
+func (r *CartRepository) CreateCart(userID int) error {
+	query := `INSERT INTO cart (user_id) VALUES ($1)`
+
+	_, err := r.DB.Exec(context.Background(), query, userID)
+	return err
+}
