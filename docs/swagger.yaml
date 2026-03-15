@@ -168,6 +168,33 @@ paths:
       summary: Ambil 1 promo berdasarkan ID
       tags:
       - promo
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Promo ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Promo Input
+        in: body
+        name: promo
+        required: true
+        schema:
+          $ref: '#/definitions/models.PromoInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Edit promo
+      tags:
+      - promo
   /register:
     post:
       consumes:

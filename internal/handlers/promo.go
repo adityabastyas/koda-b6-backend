@@ -102,6 +102,15 @@ func (h *PromoHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Edit promo
+// @Tags promo
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Promo ID"
+// @Param promo body models.PromoInput true "Promo Input"
+// @Success 200 {object} models.Response
+// @Router /promos/{id} [patch]
 func (h *PromoHandler) Update(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
