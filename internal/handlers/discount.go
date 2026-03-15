@@ -144,3 +144,27 @@ func (h *DiscountHandler) Update(ctx *gin.Context) {
 		Message: "discount berhasil diupdate",
 	})
 }
+
+func (h *DiscountHandler) Delete(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "id harus berupa angka",
+		})
+		return
+	}
+
+	if err := h.service.Delete(id); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "discount berhasil dihapus",
+	})
+}
