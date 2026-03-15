@@ -54,3 +54,20 @@ func (r *PromoRepository) Delete(id int) error {
 	_, err := r.DB.Exec(context.Background(), query, id)
 	return err
 }
+
+func (r *PromoRepository) GetByID(id int) (*models.Promo, error) {
+	query := `SELECT promo_id, title, description, promo_type, discount_value FROM promo WHERE promo_id = $1`
+
+	rows, err := r.DB.Query(context.Background(), query, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	promo, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[models.Promo])
+	if err != nil {
+		return nil, err
+	}
+
+	return &promo, nil
+}

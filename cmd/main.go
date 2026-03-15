@@ -17,12 +17,13 @@ func main() {
 	godotenv.Load()
 
 	lib.ConnectDB()
+	lib.ConnectConn()
 
 	r := gin.Default()
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	di.Container(r, lib.DB)
+	di.Container(r, lib.DB, lib.Conn)
 
 	r.Run("localhost:8888")
 }
