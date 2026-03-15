@@ -34,6 +34,7 @@ func Container(c *gin.Engine, db *pgxpool.Pool, conn *pgx.Conn) {
 	kategoryService := service.NewKategoryService(kategoryRepo)
 	kategoryHandler := handlers.NewKategoryHandler(kategoryService)
 
+	// promo conn
 	promoRepo := repository.NewPromoRepository(conn)
 	promoService := service.NewPromoService(promoRepo)
 	promoHandler := handlers.NewPromoHandler(promoService)
