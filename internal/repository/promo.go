@@ -7,3 +7,9 @@ import (
 type PromoRepository struct {
 	DB *pgx.Conn
 }
+
+func NewPromoRepository(db *pgx.Conn) *PromoRepository {
+	return &PromoRepository{
+		DB: db,
+	}
+}
