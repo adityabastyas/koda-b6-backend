@@ -1,6 +1,7 @@
 package main
 
 import (
+	"koda-b6-backend1/internal/di"
 	"koda-b6-backend1/internal/lib"
 
 	_ "koda-b6-backend1/docs"
@@ -22,7 +23,7 @@ func main() {
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
-	// di.Container(r, lib.DB, lib.Conn)
+	di.Container(r, lib.DB, lib.Conn)
 
 	r.Run("localhost:8888")
 }
