@@ -16,6 +16,23 @@ func NewCartRepository(db *pgx.Conn) *CartRepository {
 		DB: db}
 }
 
+func (r *CartRepository) GetAll() ([]models.Cart, error) {
+	query := `SELECT cart_id, user_id FROM cart`
+
+	rows, err := r.DB.Query(context.Background(), query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	carts, err := pgx.CollectRows(rows, pgx.RowToStructByName[models.Cart])
+	if err != nil {
+		return nil, err
+	}
+
+	return carts, nil
+}
+
 func (r *CartRepository) GetByUserID(userID int) (*models.Cart, error) {
 	query := `SELECT cart_id, user_id FROM cart WHERE user_id = $1`
 
