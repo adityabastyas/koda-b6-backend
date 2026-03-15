@@ -39,6 +39,13 @@ func (h *CartHandler) GetAll(ctx *gin.Context) {
 	})
 }
 
+// @Summary Ambil cart berdasarkan user ID
+// @Tags cart
+// @Produce json
+// @Security BearerAuth
+// @Param user_id path int true "User ID"
+// @Success 200 {object} models.Response
+// @Router /carts/{user_id} [get]
 func (h *CartHandler) GetByUserID(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 	if err != nil {

@@ -141,6 +141,26 @@ paths:
       summary: Ambil semua cart
       tags:
       - cart
+  /carts/{user_id}:
+    get:
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Ambil cart berdasarkan user ID
+      tags:
+      - cart
   /discounts:
     get:
       produces:
