@@ -1,4 +1,16 @@
 definitions:
+  models.ForgotPasswordInput:
+    properties:
+      email:
+        type: string
+    type: object
+  models.ResetPasswordInput:
+    properties:
+      code:
+        type: string
+      new_password:
+        type: string
+    type: object
   models.Response:
     properties:
       message:
@@ -6,6 +18,13 @@ definitions:
       result: {}
       success:
         type: boolean
+    type: object
+  models.UserLoginInput:
+    properties:
+      email:
+        type: string
+      password:
+        type: string
     type: object
   models.UserRegisterInput:
     properties:
@@ -19,6 +38,85 @@ definitions:
 info:
   contact: {}
 paths:
+  /auth/forgot-password:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Email
+        in: query
+        name: email
+        required: true
+        type: string
+      - description: Reset Password Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ResetPasswordInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Reset password dengan code OTP
+      tags:
+      - auth
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Email input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ForgotPasswordInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Request forgot password
+      tags:
+      - auth
+  /auth/login:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Login Input
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserLoginInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Login user
+      tags:
+      - auth
+  /promos:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua promo
+      tags:
+      - promo
   /register:
     post:
       consumes:
