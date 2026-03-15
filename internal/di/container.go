@@ -39,5 +39,10 @@ func Container(c *gin.Engine, db *pgxpool.Pool, conn *pgx.Conn) {
 	promoService := service.NewPromoService(promoRepo)
 	promoHandler := handlers.NewPromoHandler(promoService)
 
-	routes.SetupRoutes(c, authHandler, userHandler, productHandler, kategoryHandler, promoHandler)
+	// discount
+	discountRepo := repository.NewDiscountRepository(conn)
+	discountService := service.NewDiscountService(discountRepo)
+	discountHandler := handlers.NewDiscountHandler(discountService)
+
+	routes.SetupRoutes(c, authHandler, userHandler, productHandler, kategoryHandler, promoHandler, discountHandler)
 }
