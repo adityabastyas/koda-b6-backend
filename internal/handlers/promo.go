@@ -38,6 +38,12 @@ func (h *PromoHandler) GetAll(ctx *gin.Context) {
 	})
 }
 
+// @Summary Ambil 1 promo berdasarkan ID
+// @Tags promo
+// @Produce json
+// @Param id path int true "Promo ID"
+// @Success 200 {object} models.Response
+// @Router /promos/{id} [get]
 func (h *PromoHandler) GetByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
