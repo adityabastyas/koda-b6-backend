@@ -1,8 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"koda-b6-backend1/internal/di"
 	"koda-b6-backend1/internal/lib"
+	"os"
 
 	_ "koda-b6-backend1/docs"
 
@@ -25,5 +27,5 @@ func main() {
 
 	di.Container(r, lib.DB, lib.Conn)
 
-	r.Run("localhost:8888")
+	r.Run(fmt.Sprintf("%s", os.Getenv("PORT")))
 }

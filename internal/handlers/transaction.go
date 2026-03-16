@@ -7,5 +7,6 @@ type TransactionHandler struct {
 }
 
 func NewTransactionHandler(service *service.TransactionService) *TransactionHandler {
-	return &TransactionHandler{service: service}
+	return &TransactionHandler{
+		service: service}
 }
