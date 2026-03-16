@@ -27,5 +27,5 @@ func main() {
 
 	di.Container(r, lib.DB, lib.Conn)
 
-	r.Run(fmt.Sprintf("%s", os.Getenv("PORT")))
+	r.Run(fmt.Sprintf(":%s", os.Getenv("PORT")))
 }
