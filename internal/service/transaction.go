@@ -25,3 +25,10 @@ func (s *TransactionService) GetByID(id int) (*models.Transaction, error) {
 	}
 	return s.repo.GetByID(id)
 }
+
+func (s *TransactionService) GetByUserID(userID int) ([]models.Transaction, error) {
+	if userID <= 0 {
+		return nil, errors.New("user id tidak valid")
+	}
+	return s.repo.GetByUserID(userID)
+}

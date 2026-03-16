@@ -27,7 +27,6 @@ func (s *UserService) Register(input models.UserRegisterInput) error {
 	}
 
 	return s.repo.Save(input)
-	return nil
 }
 
 func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
