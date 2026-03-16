@@ -32,3 +32,25 @@ func (s *TransactionService) GetByUserID(userID int) ([]models.Transaction, erro
 	}
 	return s.repo.GetByUserID(userID)
 }
+
+func (s *TransactionService) Create(input models.TransactionInput) error {
+	if input.UserID <= 0 {
+		return errors.New("user id tidak valid")
+	}
+	if input.Fullname == "" {
+		return errors.New("fullname tidak boleh kosong")
+	}
+	if input.Email == "" {
+		return errors.New("email tidak boleh kosong")
+	}
+	if input.Address == "" {
+		return errors.New("address tidak boleh kosong")
+	}
+	if input.DeliveryType == "" {
+		return errors.New("delivery type tidak boleh kosong")
+	}
+	if input.Total <= 0 {
+		return errors.New("total tidak valid")
+	}
+	return s.repo.Create(input)
+}
