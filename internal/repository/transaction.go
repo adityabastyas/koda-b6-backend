@@ -31,3 +31,20 @@ func (r *TransactionRepository) GetAll() ([]models.Transaction, error) {
 
 	return transactions, nil
 }
+
+func (r *TransactionRepository) GetByID(id int) (*models.Transaction, error) {
+	query := `SELECT transaction_id, user_id, promo_id, fullname, email, address, delivery_type, subtotal, tax, total, tanggal FROM transaction WHERE transaction_id = $1`
+
+	rows, err := r.DB.Query(context.Background(), query, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	transaction, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[models.Transaction])
+	if err != nil {
+		return nil, err
+	}
+
+	return &transaction, nil
+}
