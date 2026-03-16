@@ -48,3 +48,20 @@ func (r *TransactionRepository) GetByID(id int) (*models.Transaction, error) {
 
 	return &transaction, nil
 }
+
+func (r *TransactionRepository) GetByUserID(userID int) ([]models.Transaction, error) {
+	query := `SELECT transaction_id, user_id, promo_id, fullname, email, address, delivery_type, subtotal, tax, total, tanggal FROM transaction WHERE user_id = $1`
+
+	rows, err := r.DB.Query(context.Background(), query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	transactions, err := pgx.CollectRows(rows, pgx.RowToStructByName[models.Transaction])
+	if err != nil {
+		return nil, err
+	}
+
+	return transactions, nil
+}
