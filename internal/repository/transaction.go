@@ -65,3 +65,17 @@ func (r *TransactionRepository) GetByUserID(userID int) ([]models.Transaction, e
 
 	return transactions, nil
 }
+
+func (r *TransactionRepository) Create(input models.TransactionInput) error {
+	query := `INSERT INTO transaction (user_id, promo_id, fullname, email, address, delivery_type, subtotal, tax, total) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.UserID, input.PromoID, input.Fullname, input.Email, input.Address, input.DeliveryType, input.Subtotal, input.Tax, input.Total)
+	return err
+}
+
+func (r *TransactionRepository) Delete(id int) error {
+	query := `DELETE FROM transaction WHERE transaction_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, id)
+	return err
+}
