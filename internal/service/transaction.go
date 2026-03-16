@@ -54,3 +54,10 @@ func (s *TransactionService) Create(input models.TransactionInput) error {
 	}
 	return s.repo.Create(input)
 }
+
+func (s *TransactionService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	return s.repo.Delete(id)
+}
