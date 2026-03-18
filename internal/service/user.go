@@ -27,6 +27,12 @@ func (s *UserService) Register(input models.UserRegisterInput) error {
 		return errors.New("email sudah terdaftar")
 	}
 
+	hashedPassword, err := lib.HashPassword(input.Password)
+	if err != nil {
+		return errors.New("gagal hash password")
+	}
+	input.Password = hashedPassword
+
 	return s.repo.Save(input)
 }
 
