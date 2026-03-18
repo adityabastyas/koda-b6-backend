@@ -14,3 +14,11 @@ func HashPassword(password string) (string, error) {
 
 	return string(encoded), nil
 }
+
+func VerifyPassword(password, hash string) bool {
+	ok, err := argon2.VerifyEncoded([]byte(password), []byte(hash))
+	if err != nil {
+		return false
+	}
+	return ok
+}
