@@ -2,6 +2,7 @@ package service
 
 import (
 	"errors"
+	"koda-b6-backend1/internal/lib"
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/repository"
 )
@@ -32,6 +33,10 @@ func (s *UserService) Register(input models.UserRegisterInput) error {
 func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
 	user, err := s.repo.FindByEmail(input.Email)
 	if err != nil || user.Password != input.Password {
+		return nil, errors.New("email atau password salah")
+	}
+
+	if !lib.VerifyPassword(input.Password, user.Password) {
 		return nil, errors.New("email atau password salah")
 	}
 	return user, nil
