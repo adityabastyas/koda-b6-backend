@@ -17,6 +17,12 @@ func NewTransactionHandler(service *service.TransactionService) *TransactionHand
 		service: service}
 }
 
+// @Summary Ambil semua transaction
+// @Tags transaction
+// @Produce json
+// @Security BearerAuth
+// @Success 200 {object} models.Response
+// @Router /transactions [get]
 func (h *TransactionHandler) GetAll(ctx *gin.Context) {
 	trasactions, err := h.service.GetAll()
 	if err != nil {

@@ -378,4 +378,18 @@ paths:
       summary: Register user baru
       tags:
       - auth
+  /transactions:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Ambil semua transaction
+      tags:
+      - transaction
 swagger: "2.0"
