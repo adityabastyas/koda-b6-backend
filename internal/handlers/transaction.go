@@ -74,6 +74,13 @@ func (h *TransactionHandler) GetByID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Ambil semua transaction berdasarkan user ID
+// @Tags transaction
+// @Produce json
+// @Security BearerAuth
+// @Param user_id path int true "User ID"
+// @Success 200 {object} models.Response
+// @Router /transactions/user/{user_id} [get]
 func (h *TransactionHandler) GetByUserID(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 	if err != nil {
