@@ -107,6 +107,14 @@ func (h *TransactionHandler) GetByUserID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Bikin transaction baru
+// @Tags transaction
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param transaction body models.TransactionInput true "Transaction Input"
+// @Success 200 {object} models.Response
+// @Router /transactions [post]
 func (h *TransactionHandler) Create(ctx *gin.Context) {
 	var input models.TransactionInput
 

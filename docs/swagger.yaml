@@ -41,6 +41,27 @@ definitions:
       success:
         type: boolean
     type: object
+  models.TransactionInput:
+    properties:
+      address:
+        type: string
+      delivery_type:
+        type: string
+      email:
+        type: string
+      fullname:
+        type: string
+      promo_id:
+        type: integer
+      subtotal:
+        type: integer
+      tax:
+        type: integer
+      total:
+        type: integer
+      user_id:
+        type: integer
+    type: object
   models.UserLoginInput:
     properties:
       email:
@@ -390,6 +411,28 @@ paths:
       security:
       - BearerAuth: []
       summary: Ambil semua transaction
+      tags:
+      - transaction
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Transaction Input
+        in: body
+        name: transaction
+        required: true
+        schema:
+          $ref: '#/definitions/models.TransactionInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Bikin transaction baru
       tags:
       - transaction
   /transactions/{id}:
