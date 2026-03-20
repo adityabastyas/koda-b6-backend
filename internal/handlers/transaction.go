@@ -58,18 +58,44 @@ func (h *TransactionHandler) GetByID(ctx *gin.Context) {
 		return
 	}
 
-	transaction, err := h,service.GetByID(id){
-		if err != nil{
-			ctx.JSON(http.StatusNotFound, models.Response{
-				Success: false,
-				Message: err.Error(),
-			})
-		}
+	transaction, err := h.service.GetByID(id)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, models.Response{
-		success: true,
+		Success: true,
 		Message: "success",
-		Result: transaction,
+		Result:  transaction,
+	})
+}
+
+func (h *TransactionHandler) GetByUserID(ctx *gin.Context) {
+	userID, err := strconv.Atoi(ctx.Param("user_id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "user id harus berupa angka",
+		})
+		return
+	}
+
+	transactions, err := h.service.GetByUserID(userID)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "success",
+		Result:  transactions,
 	})
 }
