@@ -436,6 +436,25 @@ paths:
       tags:
       - transaction
   /transactions/{id}:
+    delete:
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus transaction
+      tags:
+      - transaction
     get:
       parameters:
       - description: Transaction ID

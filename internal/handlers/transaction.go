@@ -140,6 +140,13 @@ func (h *TransactionHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus transaction
+// @Tags transaction
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Transaction ID"
+// @Success 200 {object} models.Response
+// @Router /transactions/{id} [delete]
 func (h *TransactionHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
