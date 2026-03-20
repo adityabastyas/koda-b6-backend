@@ -106,3 +106,28 @@ func (h *TransactionHandler) GetByUserID(ctx *gin.Context) {
 		Result:  transactions,
 	})
 }
+
+func (h *TransactionHandler) Create(ctx *gin.Context) {
+	var input models.TransactionInput
+
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	if err := h.service.Create(input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "transaksi berhasil di buat",
+	})
+}
