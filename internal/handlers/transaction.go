@@ -41,7 +41,13 @@ func (h *TransactionHandler) GetAll(ctx *gin.Context) {
 	})
 }
 
-
+// @Summary ambil 1 transaction berdasarkan ID
+// @Tags transaction
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Transaction ID"
+// @Success 200 {object} models.Response
+// @Router /transactions/{id} [get]
 func (h *TransactionHandler) GetByID(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
