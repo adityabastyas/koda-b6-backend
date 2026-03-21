@@ -25,7 +25,7 @@ func Container(c *gin.Engine, db *pgxpool.Pool, conn *pgx.Conn) {
 	authHandler := handlers.NewAuthHandler(userService, forgotService)
 
 	//product
-	productRepo := repository.NewProductRepository()
+	productRepo := repository.NewProductRepository(conn)
 	productService := service.NewProductService(productRepo)
 	productHandler := handlers.NewProductHandler(productService)
 
