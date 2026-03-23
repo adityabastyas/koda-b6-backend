@@ -41,3 +41,10 @@ func (r *CartItemRepository) Create(cartID int, input models.CartItemInput) erro
 	_, err := r.DB.Exec(context.Background(), query, cartID, input.ProductID, input.VariantID, input.ProductSizeID, input.Quantity)
 	return err
 }
+
+func (r *CartItemRepository) Delete(cartItemID int) error {
+	query := `DELETE FROM cart_item WHERE cart_item_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, cartItemID)
+	return err
+}
