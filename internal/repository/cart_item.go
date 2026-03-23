@@ -33,3 +33,11 @@ func (r *CartItemRepository) GetByCartID(cartID int) ([]models.CartItem, error) 
 
 	return items, nil
 }
+
+func (r *CartItemRepository) Create(cartID int, input models.CartItemInput) error {
+	query := `INSERT INTO cart_item (cart_id, product_id, variant_id, product_size_id, quantity)
+	VALUES ($1, $2, $3, $4, $5)`
+
+	_, err := r.DB.Exec(context.Background(), query, cartID, input.ProductID, input.VariantID, input.ProductSizeID, input.Quantity)
+	return err
+}
