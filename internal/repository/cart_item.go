@@ -42,6 +42,13 @@ func (r *CartItemRepository) Create(cartID int, input models.CartItemInput) erro
 	return err
 }
 
+func (r *CartItemRepository) Update(cartItemID int, quantity int) error {
+	query := `UPDATE cart_item SET quantity = $1 WHERE cart_item_id = $2`
+
+	_, err := r.DB.Exec(context.Background(), query, quantity, cartItemID)
+	return err
+}
+
 func (r *CartItemRepository) Delete(cartItemID int) error {
 	query := `DELETE FROM cart_item WHERE cart_item_id = $1`
 
