@@ -30,3 +30,25 @@ func (s *CartItemService) GetByUserID(userID int) ([]models.CartItem, error) {
 
 	return s.cartItemRepo.GetByCartID(cart.CartID)
 }
+
+func (s *CartItemService) Create(userID int, input models.CartItemInput) error {
+	if userID <= 0 {
+		return errors.New("user id tidak valid")
+	}
+
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+
+	if input.Quantity <= 0 {
+		return errors.New("quantity tidak valid")
+	}
+
+	cart, err := s.cartRepo.GetByUserID(userID)
+	if err != nil {
+		return errors.New("cart tidak ditemukan")
+	}
+
+	return s.cartItemRepo.Create(cart.CartID, input)
+
+}
