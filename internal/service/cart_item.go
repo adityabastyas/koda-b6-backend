@@ -50,5 +50,16 @@ func (s *CartItemService) Create(userID int, input models.CartItemInput) error {
 	}
 
 	return s.cartItemRepo.Create(cart.CartID, input)
+}
 
+func (s *CartItemService) Update(cartItemID int, quantity int) error {
+	if cartItemID <= 0 {
+		return errors.New("cart item id tidak valid")
+	}
+
+	if quantity < 0 {
+		return errors.New("quantity tidak valid")
+	}
+
+	return s.cartItemRepo.Update(cartItemID, quantity)
 }
