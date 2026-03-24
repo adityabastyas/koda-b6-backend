@@ -19,6 +19,13 @@ func NewCartItemHandler(service *service.CartItemService) *CartItemHandler {
 	}
 }
 
+// @Summary Ambil semua item di cart berdasarkan user ID
+// Tags cart-item
+// @Produce json
+// @Security BearerAuth
+// @Param user_id path int true "User ID"
+// @Success 200 {object} models.Response
+// @Router /cart-items/{user_id} [get]
 func (h *CartItemHandler) GetByUserID(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 
