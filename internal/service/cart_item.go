@@ -63,3 +63,11 @@ func (s *CartItemService) Update(cartItemID int, quantity int) error {
 
 	return s.cartItemRepo.Update(cartItemID, quantity)
 }
+
+func (s *CartItemService) Delete(cartItemID int) error {
+	if cartItemID <= 0 {
+		return errors.New("cart item id tidak valid")
+	}
+
+	return s.cartItemRepo.Delete(cartItemID)
+}
