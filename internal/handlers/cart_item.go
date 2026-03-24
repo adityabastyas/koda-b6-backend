@@ -53,6 +53,15 @@ func (h *CartItemHandler) GetByUserID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah item ke cart
+// @Tags cart-item
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param user_id path int tru "User ID"
+// @Param input body models.CartItemInput true "Cart Item Input"
+// @Success 200 {object} models.Response
+// @Router /cart-items/{user_id} [post]
 func (h *CartItemHandler) Create(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 	if err != nil {

@@ -1,4 +1,15 @@
 definitions:
+  models.CartItemInput:
+    properties:
+      product_id:
+        type: integer
+      product_size_id:
+        type: integer
+      quantity:
+        type: integer
+      variant_id:
+        type: integer
+    type: object
   models.DiscountInput:
     properties:
       description:
@@ -166,6 +177,32 @@ paths:
       security:
       - BearerAuth: []
       summary: Ambil semua item di cart berdasarkan user ID
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        type: integer
+      - description: Cart Item Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.CartItemInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah item ke cart
+      tags:
+      - cart-item
   /carts:
     get:
       produces:
