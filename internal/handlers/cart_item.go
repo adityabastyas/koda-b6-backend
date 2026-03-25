@@ -136,3 +136,27 @@ func (h *CartItemHandler) Update(ctx *gin.Context) {
 		Message: "quantity berhasil dipdate",
 	})
 }
+
+func (h *CartItemHandler) Delete(ctx *gin.Context) {
+	cartItemID, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "catt item id harus berupa angka",
+		})
+		return
+	}
+
+	if err := h.service.Delete(cartItemID); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "item berhasil dihapus dari cart",
+	})
+}
