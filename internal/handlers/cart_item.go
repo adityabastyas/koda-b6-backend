@@ -95,6 +95,15 @@ func (h *CartItemHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Update quantity item di cart
+// @Tags cart-item
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @param ud path int true "Cart Item ID"
+// @param quantity query int true "Quantity"
+// @Succes 200 {object} models.Response
+// @Router /cart-items/{id} [patch]
 func (h *CartItemHandler) Update(ctx *gin.Context) {
 	cartItemID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

@@ -159,6 +159,29 @@ paths:
       summary: Login user
       tags:
       - auth
+  /cart-items/{id}:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Cart Item ID
+        in: path
+        name: ud
+        required: true
+        type: integer
+      - description: Quantity
+        in: query
+        name: quantity
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      security:
+      - BearerAuth: []
+      summary: Update quantity item di cart
+      tags:
+      - cart-item
   /cart-items/{user_id}:
     get:
       parameters:
