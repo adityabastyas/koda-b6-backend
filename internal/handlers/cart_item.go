@@ -137,6 +137,13 @@ func (h *CartItemHandler) Update(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus item dari cart
+// @Tags cart-item
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Cart Item ID"
+// @Success 200 {object} models.Response
+// @Router /cart-items/{id} [delete]
 func (h *CartItemHandler) Delete(ctx *gin.Context) {
 	cartItemID, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
