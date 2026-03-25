@@ -94,3 +94,36 @@ func (h *CartItemHandler) Create(ctx *gin.Context) {
 		Message: "item berhasil ditambahkan ke cart",
 	})
 }
+
+func (h *CartItemHandler) Update(ctx *gin.Context) {
+	cartItemID, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "cart item id harus berupa angka",
+		})
+		return
+	}
+
+	quantity, err := strconv.Atoi(ctx.Query("quantity"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "quantity harus berupa angka",
+		})
+		return
+	}
+
+	if err := h.service.Update(cartItemID, quantity); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "quantity berhasil dipdate",
+	})
+}
