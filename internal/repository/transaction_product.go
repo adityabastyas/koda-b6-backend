@@ -39,5 +39,11 @@ func (r *TransactionProductRepository) Create(transactionID int, input models.Tr
 
 	_, err := r.DB.Exec(context.Background(), query, transactionID, input.ProductID, input.VariantID, input.ProductSizeID, input.Quantity, input.PriceAtPurchase)
 	return err
+}
+
+func (r *TransactionProductRepository) Delete(trasactionProductID int) error {
+	query := `DELETE FROM transaction_product WHERE transaction_product_id = $1`
+	_, err := r.DB.Exec(context.Background(), query, trasactionProductID)
+	return err
 
 }
