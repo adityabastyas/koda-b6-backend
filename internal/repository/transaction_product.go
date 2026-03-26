@@ -33,3 +33,11 @@ func (r *TransactionProductRepository) GetByTransactionID(transactionID int) ([]
 
 	return products, nil
 }
+
+func (r *TransactionProductRepository) Create(transactionID int, input models.TransactionProductInput) error {
+	query := `INSERT INTO transaction_product (transaction_id, product_id, variant_id, product_size_id, quantity, price_at_purchase) VALUES ($1, $2, $3, $4, $5, $6)`
+
+	_, err := r.DB.Exec(context.Background(), query, transactionID, input.ProductID, input.VariantID, input.ProductSizeID, input.Quantity, input.PriceAtPurchase)
+	return err
+
+}
