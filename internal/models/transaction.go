@@ -27,3 +27,23 @@ type TransactionInput struct {
 	Tax          int    `json:"tax"`
 	Total        int    `json:"total"`
 }
+
+// sama persis database
+type TransactionProduct struct {
+	TransactionProductID int `json:"transaction_product_id" db:"transaction_product_id"`
+	TransactionID        int `json:"transaction_id" db:"transaction_id"`
+	ProductID            int `json:"product_id" db:"product_id"`
+	VariantID            int `json:"variant_id" db:"variant_id"`
+	ProductSizeID        int `json:"product_size_id" db:"product_size_id"`
+	Quantity             int `json:"quantity" db:"quantity"`
+	PriceAtPurchase      int `json:"price_at_purchase" db:"price_at_purchase"`
+}
+
+// nerima data dari request body
+type TransactionProductInput struct {
+	ProductID       int `json:"product_id"`
+	VariantID       int `json:"variant_id"`
+	ProductSizeID   int `json:"product_size_id"`
+	Quantity        int `json:"quantity"`
+	PriceAtPurchase int `json:"price_at_purchase"`
+}
