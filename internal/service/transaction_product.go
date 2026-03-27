@@ -22,3 +22,19 @@ func (s *TransactionProductService) GetByTransactionID(transactionID int) ([]mod
 	}
 	return s.repo.GetByTransactionID(transactionID)
 }
+
+func (s *TransactionProductService) Create(transacionID int, input models.TransactionProductInput) error {
+	if transacionID <= 0 {
+		return errors.New("transaction id tidak valid")
+	}
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+	if input.Quantity <= 0 {
+		return errors.New("quantity tidak valid")
+	}
+	if input.PriceAtPurchase <= 0 {
+		return errors.New("harga tidak valid")
+	}
+	return s.repo.Create(transacionID, input)
+}
