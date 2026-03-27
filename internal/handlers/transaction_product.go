@@ -53,6 +53,15 @@ func (h *TransactionProductHandler) GetByTransactionID(ctx *gin.Context) {
 
 }
 
+// @Summary Tambah product ke transaksi
+// @Tags transaction-product
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param transaction_id path int true "Transaction ID"
+// @Param input body models.TransactionProductInput true "Transaction Product Input"
+// @Success 200 {object} models.Response
+// @Router /transaction-product/{transaction_id} [post]
 func (h *TransactionProductHandler) Create(ctx *gin.Context) {
 	transactionID, err := strconv.Atoi(ctx.Param("transaction_id"))
 	if err != nil {

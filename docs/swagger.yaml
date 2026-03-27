@@ -73,6 +73,19 @@ definitions:
       user_id:
         type: integer
     type: object
+  models.TransactionProductInput:
+    properties:
+      price_at_purchase:
+        type: integer
+      product_id:
+        type: integer
+      product_size_id:
+        type: integer
+      quantity:
+        type: integer
+      variant_id:
+        type: integer
+    type: object
   models.UserLoginInput:
     properties:
       email:
@@ -496,6 +509,34 @@ paths:
       summary: Register user baru
       tags:
       - auth
+  /transaction-product/{transaction_id}:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: transaction_id
+        required: true
+        type: integer
+      - description: Transaction Product Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.TransactionProductInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah product ke transaksi
+      tags:
+      - transaction-product
   /transaction-products/{transaction_id}:
     get:
       parameters:
