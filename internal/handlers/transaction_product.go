@@ -52,3 +52,36 @@ func (h *TransactionProductHandler) GetByTransactionID(ctx *gin.Context) {
 	})
 
 }
+
+func (h *TransactionProductHandler) Create(ctx *gin.Context) {
+	transactionID, err := strconv.Atoi(ctx.Param("transaction_id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "transaction id harus berupa angka",
+		})
+		return
+	}
+
+	var input models.TransactionProductInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	if err := h.service.Create(transactionID, input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "product berhasil ditambahkab ke transaksi",
+	})
+}
