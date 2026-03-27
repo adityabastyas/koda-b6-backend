@@ -95,6 +95,13 @@ func (h *TransactionProductHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus product dari transaksi
+// @Tags transaction-product
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Transaction Product ID"
+// @Success 200 {object} models.Response
+// @Router /transaction-products/{id} [delete]
 func (h *TransactionProductHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

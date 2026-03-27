@@ -707,6 +707,39 @@ const docTemplate = `{
                 }
             }
         },
+        "/transaction-products/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "transaction-product"
+                ],
+                "summary": "Hapus product dari transaksi",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Transaction Product ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/transaction-products/{transaction_id}": {
             "get": {
                 "security": [

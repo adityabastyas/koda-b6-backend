@@ -537,6 +537,26 @@ paths:
       summary: Tambah product ke transaksi
       tags:
       - transaction-product
+  /transaction-products/{id}:
+    delete:
+      parameters:
+      - description: Transaction Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus product dari transaksi
+      tags:
+      - transaction-product
   /transaction-products/{transaction_id}:
     get:
       parameters:
