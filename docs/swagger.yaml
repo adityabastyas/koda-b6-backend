@@ -496,6 +496,26 @@ paths:
       summary: Register user baru
       tags:
       - auth
+  /transaction-products/{transaction_id}:
+    get:
+      parameters:
+      - description: Transaction ID
+        in: path
+        name: transaction_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Ambil semua product berdasarkan transaction ID
+      tags:
+      - transaction-product
   /transactions:
     get:
       produces:

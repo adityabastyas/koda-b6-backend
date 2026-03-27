@@ -19,6 +19,13 @@ func NewTransactionProductHandler(service *service.TransactionProductService) *T
 	}
 }
 
+// @Summary Ambil semua product berdasarkan transaction ID
+// @Tags transaction-product
+// @Produce json
+// @Security BearerAuth
+// @Param transaction_id path int true "Transaction ID"
+// @Success 200 {object} models.Response
+// @Router /transaction-products/{transaction_id} [get]
 func (h *TransactionProductHandler) GetByTransactionID(ctx *gin.Context) {
 	transactionID, err := strconv.Atoi(ctx.Param("transaction_id"))
 	if err != nil {
