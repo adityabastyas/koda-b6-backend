@@ -38,3 +38,10 @@ func (s *TransactionProductService) Create(transacionID int, input models.Transa
 	}
 	return s.repo.Create(transacionID, input)
 }
+
+func (s *TransactionProductService) Delete(TransactionProductID int) error {
+	if TransactionProductID <= 0 {
+		return errors.New("transaction product id tidak valid")
+	}
+	return s.repo.Delete(TransactionProductID)
+}
