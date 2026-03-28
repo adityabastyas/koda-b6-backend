@@ -83,6 +83,14 @@ func (h *ProductVariantHandler) GetByID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah variant baru
+// @Tags product-variant
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.ProductVariantInput true "Product Variant Input"
+// @Success 200 {object} models.Response
+// @Router /product-variants [post]
 func (h *ProductVariantHandler) Create(ctx *gin.Context) {
 	var input models.ProductVariantInput
 

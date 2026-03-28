@@ -26,6 +26,15 @@ definitions:
       email:
         type: string
     type: object
+  models.ProductVariantInput:
+    properties:
+      add_price:
+        type: integer
+      product_id:
+        type: integer
+      temperature:
+        type: string
+    type: object
   models.PromoInput:
     properties:
       description:
@@ -390,6 +399,29 @@ paths:
       summary: Edit discount
       tags:
       - discount
+  /product-variants:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product Variant Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductVariantInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah variant baru
+      tags:
+      - product-variant
   /product-variants/{product_id}:
     get:
       parameters:
