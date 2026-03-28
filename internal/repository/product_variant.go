@@ -34,3 +34,20 @@ func (r *ProductVariantRepository) GetProductID(productID int) ([]models.Product
 
 	return variants, nil
 }
+
+func (r *ProductVariantRepository) GetByID(id int) (*models.ProductVariant, error) {
+	query := `SELECT variant_id, product_id, temperature, add_price FROM product_variant WHERE variant_id = $1`
+
+	rows, err := r.DB.Query(context.Background(), query, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	variant, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[models.ProductVariant])
+	if err != nil {
+		return nil, err
+	}
+
+	return &variant, err
+}
