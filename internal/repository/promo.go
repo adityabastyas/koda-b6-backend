@@ -5,13 +5,14 @@ import (
 	"koda-b6-backend1/internal/models"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type PromoRepository struct {
-	DB *pgx.Conn
+	DB *pgxpool.Pool
 }
 
-func NewPromoRepository(db *pgx.Conn) *PromoRepository {
+func NewPromoRepository(db *pgxpool.Pool) *PromoRepository {
 	return &PromoRepository{
 		DB: db,
 	}

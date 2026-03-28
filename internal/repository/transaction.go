@@ -5,13 +5,14 @@ import (
 	"koda-b6-backend1/internal/models"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type TransactionRepository struct {
-	DB *pgx.Conn
+	DB *pgxpool.Pool
 }
 
-func NewTransactionRepository(db *pgx.Conn) *TransactionRepository {
+func NewTransactionRepository(db *pgxpool.Pool) *TransactionRepository {
 	return &TransactionRepository{DB: db}
 }
 

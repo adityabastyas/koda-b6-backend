@@ -7,11 +7,10 @@ import (
 	"koda-b6-backend1/internal/service"
 
 	"github.com/gin-gonic/gin"
-	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
-func Container(c *gin.Engine, db *pgxpool.Pool, conn *pgx.Conn) {
+func Container(c *gin.Engine, db *pgxpool.Pool) {
 	//user
 	userRepo := repository.NewUserRepository(db)
 	userService := service.NewUserService(userRepo)
@@ -25,7 +24,7 @@ func Container(c *gin.Engine, db *pgxpool.Pool, conn *pgx.Conn) {
 	authHandler := handlers.NewAuthHandler(userService, forgotService)
 
 	//product
-	productRepo := repository.NewProductRepository(conn)
+	productRepo := repository.NewProductRepository(db)
 	productService := service.NewProductService(productRepo)
 	productHandler := handlers.NewProductHandler(productService)
 
@@ -35,32 +34,32 @@ func Container(c *gin.Engine, db *pgxpool.Pool, conn *pgx.Conn) {
 	kategoryHandler := handlers.NewKategoryHandler(kategoryService)
 
 	// promo conn
-	promoRepo := repository.NewPromoRepository(conn)
+	promoRepo := repository.NewPromoRepository(db)
 	promoService := service.NewPromoService(promoRepo)
 	promoHandler := handlers.NewPromoHandler(promoService)
 
 	// discount
-	discountRepo := repository.NewDiscountRepository(conn)
+	discountRepo := repository.NewDiscountRepository(db)
 	discountService := service.NewDiscountService(discountRepo)
 	discountHandler := handlers.NewDiscountHandler(discountService)
 
 	//cart
-	cartRepo := repository.NewCartRepository(conn)
+	cartRepo := repository.NewCartRepository(db)
 	cartService := service.NewCartService(cartRepo)
 	cartHandler := handlers.NewCartHandler(cartService)
 
 	//transaction
-	transactionRepo := repository.NewTransactionRepository(conn)
+	transactionRepo := repository.NewTransactionRepository(db)
 	transactionService := service.NewTransactionService(transactionRepo)
 	transactionHandler := handlers.NewTransactionHandler(transactionService)
 
 	// cart item
-	cartItemRepo := repository.NewCartItemRepository(conn)
+	cartItemRepo := repository.NewCartItemRepository(db)
 	cartItemService := service.NewCartItemService(cartItemRepo, cartRepo)
 	cartItemHandler := handlers.NewCartItemHandler(cartItemService)
 
 	// transaction product
-	transactionProductRepo := repository.NewTransactionProductRepository(conn)
+	transactionProductRepo := repository.NewTransactionProductRepository(db)
 	transactionProductService := service.NewTransactionProductService(transactionProductRepo)
 	transactionProductHandler := handlers.NewTransactionProductHandler(transactionProductService)
 

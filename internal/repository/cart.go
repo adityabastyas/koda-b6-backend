@@ -5,13 +5,14 @@ import (
 	"koda-b6-backend1/internal/models"
 
 	"github.com/jackc/pgx/v5"
+	"github.com/jackc/pgx/v5/pgxpool"
 )
 
 type CartRepository struct {
-	DB *pgx.Conn
+	DB *pgxpool.Pool
 }
 
-func NewCartRepository(db *pgx.Conn) *CartRepository {
+func NewCartRepository(db *pgxpool.Pool) *CartRepository {
 	return &CartRepository{
 		DB: db}
 }
