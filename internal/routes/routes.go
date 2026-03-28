@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler, transactionProductHandler *handlers.TransactionProductHandler) {
+func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler, transactionProductHandler *handlers.TransactionProductHandler, productVariantHandler *handlers.ProductVariantHandler) {
 
 	r.Use(lib.CorsMiddleware())
 
@@ -89,5 +89,14 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	transactionProductGroup.GET("/:transaction_id", transactionProductHandler.GetByTransactionID)
 	transactionProductGroup.POST("/:transaction_id", transactionProductHandler.Create)
 	transactionProductGroup.DELETE("/:id", transactionProductHandler.Delete)
+
+	//product-variant routes
+	productVariantGroup := r.Group("/product-variant")
+	productVariantGroup.GET("/:product_id", productVariantHandler.GetByProductID)
+	productVariantGroup.GET("/detail/:id", productVariantHandler.GetByID)
+	productVariantGroup.Use(lib.AuthMiddleware())
+	productVariantGroup.POST("", productVariantHandler.Create)
+	productVariantGroup.PATCH("/:id", productVariantHandler.Update)
+	productVariantGroup.DELETE("/:id", productVariantHandler.Delete)
 
 }
