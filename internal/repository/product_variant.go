@@ -65,3 +65,10 @@ func (r *ProductVariantRepository) Update(id int, input models.ProductVariantInp
 	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Temperature, input.AddPrice, id)
 	return err
 }
+
+func (r *ProductVariantRepository) Delete(id int) error {
+	query := `DELETE FROM product_variant WHERE variant_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, id)
+	return err
+}
