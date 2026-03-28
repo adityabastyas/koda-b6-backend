@@ -29,3 +29,13 @@ func (s *ProductVariantService) GetByID(id int) (*models.ProductVariant, error) 
 	}
 	return s.repo.GetByID(id)
 }
+
+func (s *ProductVariantService) Create(input models.ProductVariantInput) error {
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+	if input.Temperature == "" {
+		return errors.New("temperature tidak boleh kosong")
+	}
+	return s.repo.Create(input)
+}
