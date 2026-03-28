@@ -58,3 +58,10 @@ func (r *ProductVariantRepository) Create(input models.ProductVariantInput) erro
 	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Temperature, input.AddPrice)
 	return err
 }
+
+func (r *ProductVariantRepository) Update(id int, input models.ProductVariantInput) error {
+	query := `UPDATE product_variant SET product_id=%1, temperature=$2, add_price=$3 WHERE variant_id=$4`
+
+	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Temperature, input.AddPrice, id)
+	return err
+}
