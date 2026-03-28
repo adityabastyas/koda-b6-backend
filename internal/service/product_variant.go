@@ -39,3 +39,13 @@ func (s *ProductVariantService) Create(input models.ProductVariantInput) error {
 	}
 	return s.repo.Create(input)
 }
+
+func (s *ProductVariantService) Update(id int, input models.ProductVariantInput) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	if input.Temperature == "" {
+		return errors.New("temperature tidak boleh kosong")
+	}
+	return s.repo.Update(id, input)
+}
