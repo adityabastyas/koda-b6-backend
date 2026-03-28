@@ -115,3 +115,36 @@ func (h *ProductVariantHandler) Create(ctx *gin.Context) {
 		Message: "variant berhasil di tambahkan",
 	})
 }
+
+func (h *ProductVariantHandler) Update(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "id harus berupa angka",
+		})
+		return
+	}
+
+	var input models.ProductVariantInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	if err := h.service.Update(id, input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "variant berhasil diupdate",
+	})
+}
