@@ -49,3 +49,10 @@ func (s *ProductVariantService) Update(id int, input models.ProductVariantInput)
 	}
 	return s.repo.Update(id, input)
 }
+
+func (s *ProductVariantService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	return s.repo.Delete(id)
+}
