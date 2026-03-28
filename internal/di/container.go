@@ -63,5 +63,10 @@ func Container(c *gin.Engine, db *pgxpool.Pool) {
 	transactionProductService := service.NewTransactionProductService(transactionProductRepo)
 	transactionProductHandler := handlers.NewTransactionProductHandler(transactionProductService)
 
-	routes.SetupRoutes(c, authHandler, userHandler, productHandler, kategoryHandler, promoHandler, discountHandler, cartHandler, transactionHandler, cartItemHandler, transactionProductHandler)
+	// product variant
+	productVariantRepo := repository.NewProductVariantRepository(db)
+	productVariantService := service.NewProductVariantService(productVariantRepo)
+	productVariantHandler := handlers.NewProductVariantHandler(productVariantService)
+
+	routes.SetupRoutes(c, authHandler, userHandler, productHandler, kategoryHandler, promoHandler, discountHandler, cartHandler, transactionHandler, cartItemHandler, transactionProductHandler, productVariantHandler)
 }
