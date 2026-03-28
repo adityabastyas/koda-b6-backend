@@ -51,3 +51,10 @@ func (r *ProductVariantRepository) GetByID(id int) (*models.ProductVariant, erro
 
 	return &variant, err
 }
+
+func (r *ProductVariantRepository) Create(input models.ProductVariantInput) error {
+	query := `INSERT INTO product_variant (product_id, temperature, add_price) VALUES ($1, $2, $3)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Temperature, input.AddPrice)
+	return err
+}
