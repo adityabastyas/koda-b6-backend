@@ -22,3 +22,10 @@ func (s *ProductVariantService) GetByProductID(productID int) ([]models.ProductV
 	}
 	return s.repo.GetByProductID(productID)
 }
+
+func (s *ProductVariantService) GetByID(id int) (*models.ProductVariant, error) {
+	if id <= 0 {
+		return nil, errors.New("id tidak valid")
+	}
+	return s.repo.GetByID(id)
+}
