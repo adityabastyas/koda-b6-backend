@@ -157,3 +157,27 @@ func (h *ProductVariantHandler) Update(ctx *gin.Context) {
 		Message: "variant berhasil diupdate",
 	})
 }
+
+func (h *ProductVariantHandler) Delete(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "id harus berupa angka",
+		})
+		return
+	}
+
+	if err := h.service.Delete(id); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "variant berhasil dihapus",
+	})
+}
