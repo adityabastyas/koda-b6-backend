@@ -472,6 +472,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/product-variants/detail/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product-variant"
+                ],
+                "summary": "Ambil 1 variant berdasarkan ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Variant ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/product-variants/{product_id}": {
             "get": {
                 "produces": [

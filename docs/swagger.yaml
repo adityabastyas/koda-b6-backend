@@ -408,6 +408,24 @@ paths:
       summary: Ambil semua variant berdasarkan ID
       tags:
       - product-variant
+  /product-variants/detail/{id}:
+    get:
+      parameters:
+      - description: Variant ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil 1 variant berdasarkan ID
+      tags:
+      - product-variant
   /promos:
     get:
       produces:
