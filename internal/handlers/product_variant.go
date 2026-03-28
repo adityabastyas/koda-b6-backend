@@ -116,6 +116,15 @@ func (h *ProductVariantHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Edit variant
+// @Tags product-variant
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Variant ID"
+// @Param input body models.ProductVariantInput true "Product Variant Input"
+// @Success 200 {object} models.Response
+// @Router /product-variants/{id} [patch]
 func (h *ProductVariantHandler) Update(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

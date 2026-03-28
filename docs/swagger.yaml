@@ -422,6 +422,34 @@ paths:
       summary: Tambah variant baru
       tags:
       - product-variant
+  /product-variants/{id}:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Variant ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Product Variant Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductVariantInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Edit variant
+      tags:
+      - product-variant
   /product-variants/{product_id}:
     get:
       parameters:
