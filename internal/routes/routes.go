@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler) {
+func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler, transactionProductHandler *handlers.TransactionProductHandler) {
 
 	r.Use(lib.CorsMiddleware())
 
@@ -82,5 +82,12 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	cartItemGroup.POST("/:user_id", cartItemHandler.Create)
 	cartItemGroup.PATCH("/:id", cartItemHandler.Update)
 	cartItemGroup.DELETE("/:id", cartItemHandler.Delete)
+
+	// transaction-product
+	transactionProductGroup := r.Group("/transaction-products")
+	transactionProductGroup.Use(lib.AuthMiddleware())
+	transactionProductGroup.GET("/:transaction_id", transactionProductHandler.GetByTransactionID)
+	transactionProductGroup.POST("/:transaction_id", transactionProductHandler.Create)
+	transactionProductGroup.DELETE("/:id", transactionProductHandler.Delete)
 
 }
