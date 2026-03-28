@@ -158,6 +158,13 @@ func (h *ProductVariantHandler) Update(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus variant
+// @Tags product-variant
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Variant ID"
+// @Success 200 {object} models.Response
+// @Router /product-variants
 func (h *ProductVariantHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
