@@ -472,6 +472,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/product-variants/{product_id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product-variant"
+                ],
+                "summary": "Ambil semua variant berdasarkan ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/promos": {
             "get": {
                 "produces": [

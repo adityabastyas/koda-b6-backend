@@ -19,6 +19,12 @@ func NewProductVariantHandler(service *service.ProductVariantService) *ProductVa
 	}
 }
 
+// @Summary Ambil semua variant berdasarkan ID
+// @Tags product-variant
+// @Produce json
+// @Param product_id path int true "Product ID"
+// @Success 200 {object} models.Response
+// @Router /product-variants/{product_id} [get]
 func (h *ProductVariantHandler) GetByProductID(ctx *gin.Context) {
 	productID, err := strconv.Atoi(ctx.Param("product_id"))
 	if err != nil {
