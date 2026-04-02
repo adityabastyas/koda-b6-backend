@@ -432,6 +432,25 @@ paths:
       tags:
       - product-size
   /product-sizes/{id}:
+    delete:
+      parameters:
+      - description: Size ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus size
+      tags:
+      - product-size
     patch:
       consumes:
       - application/json

@@ -158,6 +158,13 @@ func (h *ProductSizeHandler) Update(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus size
+// @Tags product-size
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Size ID"
+// @Success 200 {object} models.Response
+// @Router /product-sizes/{id} [delete]
 func (h *ProductSizeHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
