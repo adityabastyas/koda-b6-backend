@@ -58,3 +58,10 @@ func (r *ProductSizeRepository) Create(input models.ProductSizeInput) error {
 	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Name, input.AddPrice)
 	return err
 }
+
+func (r *ProductSizeRepository) Update(id int, input models.ProductSizeInput) error {
+	query := `UPDATE product_size SET product_id=$1, name=$2, add_price=$3 WHERE product_size_id=$4`
+
+	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Name, input.AddPrice, id)
+	return err
+}
