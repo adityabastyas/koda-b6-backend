@@ -116,6 +116,15 @@ func (h *ProductSizeHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Edit size
+// @Tags product-size
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Size ID"
+// @Param input body models.ProductSizeInput true "Product Size Input"
+// @Success 200 {object} models.Response
+// @Router /product-sizes/{id} [patch]
 func (h *ProductSizeHandler) Update(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

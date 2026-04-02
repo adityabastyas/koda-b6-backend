@@ -431,6 +431,34 @@ paths:
       summary: Tambah size baru
       tags:
       - product-size
+  /product-sizes/{id}:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Size ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Product Size Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductSizeInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Edit size
+      tags:
+      - product-size
   /product-sizes/{product_id}:
     get:
       parameters:
