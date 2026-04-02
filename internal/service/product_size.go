@@ -22,3 +22,10 @@ func (s *ProductSizeService) GetByProductID(productID int) ([]models.ProductSize
 	}
 	return s.repo.GetByProductID(productID)
 }
+
+func (s *ProductSizeService) GetByID(id int) (*models.ProductSize, error) {
+	if id <= 0 {
+		return nil, errors.New("id tidak valid")
+	}
+	return s.repo.GetByID(id)
+}
