@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler, transactionProductHandler *handlers.TransactionProductHandler, productVariantHandler *handlers.ProductVariantHandler) {
+func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler, transactionProductHandler *handlers.TransactionProductHandler, productVariantHandler *handlers.ProductVariantHandler, productSizeHandler *handlers.ProductSizeHandler) {
 
 	r.Use(lib.CorsMiddleware())
 
@@ -98,5 +98,15 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	productVariantGroup.POST("", productVariantHandler.Create)
 	productVariantGroup.PATCH("/:id", productVariantHandler.Update)
 	productVariantGroup.DELETE("/:id", productVariantHandler.Delete)
+
+	// product size
+
+	productSizeGroup := r.Group("/product-sizes")
+	productSizeGroup.GET("/:product_id", productSizeHandler.GetByProductID)
+	productSizeGroup.GET("/detail/:id", productSizeHandler.GetByID)
+	productSizeGroup.Use(lib.AuthMiddleware())
+	productSizeGroup.POST("", productSizeHandler.Create)
+	productSizeGroup.PATCH("/:id", productSizeHandler.Update)
+	productSizeGroup.DELETE("/:id", productSizeHandler.Delete)
 
 }
