@@ -26,6 +26,15 @@ definitions:
       email:
         type: string
     type: object
+  models.ProductSizeInput:
+    properties:
+      add_price:
+        type: integer
+      name:
+        type: string
+      product_id:
+        type: integer
+    type: object
   models.ProductVariantInput:
     properties:
       add_price:
@@ -399,6 +408,29 @@ paths:
       summary: Edit discount
       tags:
       - discount
+  /product-sizes:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product Size Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductSizeInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah size baru
+      tags:
+      - product-size
   /product-sizes/{product_id}:
     get:
       parameters:

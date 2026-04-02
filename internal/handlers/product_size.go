@@ -83,6 +83,14 @@ func (h *ProductSizeHandler) GetByID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah size baru
+// @Tags product-size
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.ProductSizeInput true "Product Size Input"
+// @Success 200 {object} models.Response
+// @Router /product-sizes [post]
 func (h *ProductSizeHandler) Create(ctx *gin.Context) {
 	var input models.ProductSizeInput
 

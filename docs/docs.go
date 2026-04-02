@@ -472,6 +472,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/product-sizes": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product-size"
+                ],
+                "summary": "Tambah size baru",
+                "parameters": [
+                    {
+                        "description": "Product Size Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ProductSizeInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/product-sizes/detail/{id}": {
             "get": {
                 "produces": [
@@ -1197,6 +1235,20 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string"
+                }
+            }
+        },
+        "models.ProductSizeInput": {
+            "type": "object",
+            "properties": {
+                "add_price": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "product_id": {
+                    "type": "integer"
                 }
             }
         },
