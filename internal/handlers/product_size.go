@@ -82,3 +82,28 @@ func (h *ProductSizeHandler) GetByID(ctx *gin.Context) {
 		Result:  size,
 	})
 }
+
+func (h *ProductSizeHandler) Create(ctx *gin.Context) {
+	var input models.ProductSizeInput
+
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	if err := h.service.Create(input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "size berhasil ditambahkan",
+	})
+}
