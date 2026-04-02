@@ -29,3 +29,13 @@ func (s *ProductSizeService) GetByID(id int) (*models.ProductSize, error) {
 	}
 	return s.repo.GetByID(id)
 }
+
+func (s *ProductSizeService) Create(input models.ProductSizeInput) error {
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+	if input.Name == "" {
+		return errors.New("nama size tidak boleh kosong")
+	}
+	return s.repo.Create(input)
+}
