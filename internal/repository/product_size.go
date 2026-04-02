@@ -34,3 +34,20 @@ func (r *ProductSizeRepository) GetByProductID(productID int) ([]models.ProductS
 
 	return sizes, nil
 }
+
+func (r *ProductSizeRepository) GetByID(id int) (*models.ProductSize, error) {
+	query := `SELECT product_size_id, product_id, name, add_price FROM product_size WHERE product_size_id = $1`
+
+	rows, err := r.DB.Query(context.Background(), query, id)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	size, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[models.ProductSize])
+	if err != nil {
+		return nil, err
+	}
+
+	return &size, nil
+}
