@@ -51,3 +51,10 @@ func (r *ProductSizeRepository) GetByID(id int) (*models.ProductSize, error) {
 
 	return &size, nil
 }
+
+func (r *ProductSizeRepository) Create(input models.ProductSizeInput) error {
+	query := `INSERT INTO product_size (product_id, name, add_price) VALUES ($1, $2, $3)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Name, input.AddPrice)
+	return err
+}
