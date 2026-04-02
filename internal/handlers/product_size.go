@@ -19,6 +19,12 @@ func NewProductSizeHandler(service *service.ProductSizeService) *ProductSizeHand
 	}
 }
 
+// @Summary Ambil semua size berdasarkan product ID
+// @Tags product-size
+// @Produce json
+// @Param product_id path int true "Product ID"
+// @Success 200 {object} models.Response
+// @Router /product-sizes/{product_id} [get]
 func (h *ProductSizeHandler) GetByProductID(ctx *gin.Context) {
 	productID, err := strconv.Atoi(ctx.Param("product_id"))
 	if err != nil {

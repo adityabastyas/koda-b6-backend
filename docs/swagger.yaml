@@ -399,6 +399,24 @@ paths:
       summary: Edit discount
       tags:
       - discount
+  /product-sizes/{product_id}:
+    get:
+      parameters:
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua size berdasarkan product ID
+      tags:
+      - product-size
   /product-variants:
     post:
       consumes:
@@ -423,6 +441,25 @@ paths:
       tags:
       - product-variant
   /product-variants/{id}:
+    delete:
+      parameters:
+      - description: Variant ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus variant
+      tags:
+      - product-variant
     patch:
       consumes:
       - application/json

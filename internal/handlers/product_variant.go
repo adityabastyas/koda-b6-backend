@@ -164,7 +164,7 @@ func (h *ProductVariantHandler) Update(ctx *gin.Context) {
 // @Security BearerAuth
 // @Param id path int true "Variant ID"
 // @Success 200 {object} models.Response
-// @Router /product-variants
+// @Router /product-variants/{id} [delete]
 func (h *ProductVariantHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

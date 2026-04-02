@@ -472,6 +472,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/product-sizes/{product_id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product-size"
+                ],
+                "summary": "Ambil semua size berdasarkan product ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Product ID",
+                        "name": "product_id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/product-variants": {
             "post": {
                 "security": [
@@ -539,6 +567,37 @@ const docTemplate = `{
             }
         },
         "/product-variants/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product-variant"
+                ],
+                "summary": "Hapus variant",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Variant ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
             "patch": {
                 "security": [
                     {
