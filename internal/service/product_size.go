@@ -39,3 +39,13 @@ func (s *ProductSizeService) Create(input models.ProductSizeInput) error {
 	}
 	return s.repo.Create(input)
 }
+
+func (s *ProductSizeService) Update(id int, input models.ProductSizeInput) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	if input.Name == "" {
+		return errors.New("nama size tidak boleh kosong")
+	}
+	return s.repo.Update(id, input)
+}
