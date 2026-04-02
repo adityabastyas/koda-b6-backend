@@ -472,6 +472,34 @@ const docTemplate = `{
                 }
             }
         },
+        "/product-sizes/detail/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product-size"
+                ],
+                "summary": "Ambil 1 size berdasarkan ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Size ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/product-sizes/{product_id}": {
             "get": {
                 "produces": [

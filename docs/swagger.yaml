@@ -417,6 +417,24 @@ paths:
       summary: Ambil semua size berdasarkan product ID
       tags:
       - product-size
+  /product-sizes/detail/{id}:
+    get:
+      parameters:
+      - description: Size ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil 1 size berdasarkan ID
+      tags:
+      - product-size
   /product-variants:
     post:
       consumes:
