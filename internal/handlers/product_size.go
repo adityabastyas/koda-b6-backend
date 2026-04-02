@@ -157,3 +157,27 @@ func (h *ProductSizeHandler) Update(ctx *gin.Context) {
 		Message: "size berhasil diupdate",
 	})
 }
+
+func (h *ProductSizeHandler) Delete(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "id harus berupa angka",
+		})
+		return
+	}
+
+	if err := h.service.Delete(id); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "size berhasil dihapus",
+	})
+}
