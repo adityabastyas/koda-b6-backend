@@ -115,3 +115,36 @@ func (h *ProductSizeHandler) Create(ctx *gin.Context) {
 		Message: "size berhasil ditambahkan",
 	})
 }
+
+func (h *ProductSizeHandler) Update(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "id harus berupa angka",
+		})
+		return
+	}
+
+	var input models.ProductSizeInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	if err := h.service.Update(id, input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "size berhasil diupdate",
+	})
+}
