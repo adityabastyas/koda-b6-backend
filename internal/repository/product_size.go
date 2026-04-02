@@ -65,3 +65,10 @@ func (r *ProductSizeRepository) Update(id int, input models.ProductSizeInput) er
 	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Name, input.AddPrice, id)
 	return err
 }
+
+func (r *ProductSizeRepository) Delete(id int) error {
+	query := `DELETE FROM product_size WHERE product_size_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, id)
+	return err
+}
