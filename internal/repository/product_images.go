@@ -34,3 +34,10 @@ func (r *ProductImagesRepository) GetByProductID(productID int) ([]models.Produc
 
 	return images, nil
 }
+
+func (r *ProductImagesRepository) Create(input models.ProductImagesInput) error {
+	query := `INSERT INTO product_images (product_id, path) VALUES ($1, $2)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Path)
+	return err
+}
