@@ -41,3 +41,10 @@ func (r *ProductImagesRepository) Create(input models.ProductImagesInput) error 
 	_, err := r.DB.Exec(context.Background(), query, input.ProductID, input.Path)
 	return err
 }
+
+func (r *ProductImagesRepository) Delete(id int) error {
+	query := `DELETE FROM product_images WHERE product_images_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, id)
+	return err
+}
