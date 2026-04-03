@@ -29,3 +29,20 @@ func (s *ReviewsService) GetByUserID(userID int) ([]models.Reviews, error) {
 	}
 	return s.repo.GetByUserID(userID)
 }
+
+func (s *ReviewsService) Create(userID int, input models.ReviewsInput) error {
+	if userID <= 0 {
+		return errors.New("user id tidak valid")
+	}
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+	if input.Message == "" {
+		return errors.New("message tidak boleh kosong")
+	}
+
+	if input.Rating < 1 || input.Rating > 5 {
+		return errors.New("rating harus antara 1-5")
+	}
+	return s.repo.Create(userID, input)
+}
