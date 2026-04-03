@@ -46,3 +46,10 @@ func (s *ReviewsService) Create(userID int, input models.ReviewsInput) error {
 	}
 	return s.repo.Create(userID, input)
 }
+
+func (s *ReviewsService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	return s.repo.Delete(id)
+}
