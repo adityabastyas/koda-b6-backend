@@ -807,6 +807,24 @@ paths:
       summary: Register user baru
       tags:
       - auth
+  /reviews/product/{product_id}:
+    get:
+      parameters:
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua review berdasarkan product ID
+      tags:
+      - reviews
   /transaction-product/{transaction_id}:
     post:
       consumes:

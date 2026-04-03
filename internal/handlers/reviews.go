@@ -19,6 +19,12 @@ func NewReviewsHandler(service *service.ReviewsService) *ReviewsHandler {
 	}
 }
 
+// @Summary Ambil semua review berdasarkan product ID
+// @Tags reviews
+// @Produce json
+// @Param product_id path int true "Product ID"
+// @Success 200 {object} models.Response
+// @Router /reviews/product/{product_id} [get]
 func (h *ReviewsHandler) GetByProductID(ctx *gin.Context) {
 	productID, err := strconv.Atoi(ctx.Param("product_id"))
 	if err != nil {
