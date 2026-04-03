@@ -84,6 +84,13 @@ func (h *ProductImagesHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus image
+// @Tags product-images
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Image ID"
+// @Success 200 {object} models.Response
+// @Router /product-images/{id} [delete]
 func (h *ProductImagesHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {

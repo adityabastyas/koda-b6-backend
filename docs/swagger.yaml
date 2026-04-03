@@ -438,6 +438,26 @@ paths:
       summary: Tambah image baru
       tags:
       - product-images
+  /product-images/{id}:
+    delete:
+      parameters:
+      - description: Image ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus image
+      tags:
+      - product-images
   /product-images/{product_id}:
     get:
       parameters:
