@@ -34,3 +34,20 @@ func (r *ReviewsRepository) GetByProductID(productID int) ([]models.Reviews, err
 
 	return reviews, nil
 }
+
+func (r *ReviewsRepository) GetByUserID(userID int) ([]models.Reviews, error) {
+	query := `SELECT reviews_id, product_id, user_id, message, rating FROM reviews WHERE user_id = $1`
+
+	rows, err := r.DB.Query(context.Background(), query, userID)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	reviews, err := pgx.CollectRows(rows, pgx.RowToStructByName[models.Reviews])
+	if err != nil {
+		return nil, err
+	}
+
+	return reviews, nil
+}
