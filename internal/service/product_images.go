@@ -32,3 +32,10 @@ func (s *ProductImagesService) Create(input models.ProductImagesInput) error {
 	}
 	return s.repo.Create(input)
 }
+
+func (s *ProductImagesService) Delete(id int) error {
+	if id <= 0 {
+		return errors.New("id tidak valid")
+	}
+	return s.repo.Delete(id)
+}
