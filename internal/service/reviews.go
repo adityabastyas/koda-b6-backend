@@ -22,3 +22,10 @@ func (s *ReviewsService) GetByProductID(productID int) ([]models.Reviews, error)
 	}
 	return s.repo.GetByProductID(productID)
 }
+
+func (s *ReviewsService) GetByUserID(userID int) ([]models.Reviews, error) {
+	if userID <= 0 {
+		return nil, errors.New("user id tidak valid")
+	}
+	return s.repo.GetByUserID(userID)
+}
