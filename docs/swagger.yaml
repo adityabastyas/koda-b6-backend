@@ -816,6 +816,26 @@ paths:
       summary: Register user baru
       tags:
       - auth
+  /reviews/{id}:
+    delete:
+      parameters:
+      - description: Review ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus review
+      tags:
+      - reviews
   /reviews/{user_id}:
     post:
       consumes:

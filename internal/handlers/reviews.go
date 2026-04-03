@@ -126,6 +126,13 @@ func (h *ReviewsHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus review
+// @Tags reviews
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Review ID"
+// @Success 200 {object} models.Response
+// @Router /reviews/{id} [delete]
 func (h *ReviewsHandler) Delete(ctx *gin.Context) {
 	id, err := strconv.Atoi(ctx.Param("id"))
 	if err != nil {
