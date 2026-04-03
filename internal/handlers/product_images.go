@@ -50,3 +50,28 @@ func (h *ProductImagesHandler) GetByProductID(ctx *gin.Context) {
 		Result:  images,
 	})
 }
+
+func (h *ProductImagesHandler) Create(ctx *gin.Context) {
+	var input models.ProductImagesInput
+
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	if err := h.service.Create(input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "image berhasil ditambahkan",
+	})
+}
