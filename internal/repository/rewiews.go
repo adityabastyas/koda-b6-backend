@@ -51,3 +51,10 @@ func (r *ReviewsRepository) GetByUserID(userID int) ([]models.Reviews, error) {
 
 	return reviews, nil
 }
+
+func (r *ReviewsRepository) Create(userID int, input models.ReviewsInput) error {
+	query := `INSERT INTO reviews (product_id, user_id, message, rating) VALUES ($1, $2, $3, $4)`
+
+	_, err := r.DB.Exec(context.Background(), query, input.ProductID, userID, input.Message, input.Rating)
+	return err
+}
