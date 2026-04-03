@@ -50,3 +50,29 @@ func (h *ReviewsHandler) GetByProductID(ctx *gin.Context) {
 		Result:  reviews,
 	})
 }
+
+func (h *ReviewsHandler) GetByUserID(ctx *gin.Context) {
+	userID, err := strconv.Atoi(ctx.Param("user_id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "user id harus berupa angka",
+		})
+		return
+	}
+
+	reviews, err := h.service.GetByUserID(userID)
+	if err != nil {
+		ctx.JSON(http.StatusNotFound, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "success",
+		Result:  reviews,
+	})
+}
