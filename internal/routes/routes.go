@@ -7,7 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler, transactionProductHandler *handlers.TransactionProductHandler, productVariantHandler *handlers.ProductVariantHandler, productSizeHandler *handlers.ProductSizeHandler, productImagesHandler *handlers.ProductImagesHandler) {
+func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *handlers.UserHandler, productHandler *handlers.ProductHandler, kategoryHandler *handlers.KategoryHandler, promoHandler *handlers.PromoHandler, discountHandler *handlers.DiscountHandler, cartHandler *handlers.CartHandler, transactionHandler *handlers.TransactionHandler, cartItemHandler *handlers.CartItemHandler, transactionProductHandler *handlers.TransactionProductHandler, productVariantHandler *handlers.ProductVariantHandler, productSizeHandler *handlers.ProductSizeHandler, productImagesHandler *handlers.ProductImagesHandler, reviewsHandler *handlers.ReviewsHandler) {
 
 	r.Use(lib.CorsMiddleware())
 
@@ -115,5 +115,13 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	productImagesGroup.Use(lib.AuthMiddleware())
 	productImagesGroup.POST("", productImagesHandler.Create)
 	productImagesGroup.DELETE("/:id", productImagesHandler.Delete)
+
+	// reviews routes
+	reviewsGroup := r.Group("/reviews")
+	reviewsGroup.GET("/product/:product_id", reviewsHandler.GetByProductID)
+	reviewsGroup.GET("/user/:user_id", reviewsHandler.GetByUserID)
+	reviewsGroup.Use(lib.AuthMiddleware())
+	reviewsGroup.POST("/:user_id", reviewsHandler.Create)
+	reviewsGroup.DELETE("/:id", reviewsHandler.Delete)
 
 }
