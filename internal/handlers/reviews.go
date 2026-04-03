@@ -83,3 +83,36 @@ func (h *ReviewsHandler) GetByUserID(ctx *gin.Context) {
 		Result:  reviews,
 	})
 }
+
+func (h *ReviewsHandler) Create(ctx *gin.Context) {
+	userID, err := strconv.Atoi(ctx.Param("user_id"))
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "user id harus berupa angka",
+		})
+		return
+	}
+
+	var input models.ReviewsInput
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	if err := h.service.Create(userID, input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "review berhasil ditambahkan",
+	})
+}
