@@ -58,3 +58,10 @@ func (r *ReviewsRepository) Create(userID int, input models.ReviewsInput) error 
 	_, err := r.DB.Exec(context.Background(), query, input.ProductID, userID, input.Message, input.Rating)
 	return err
 }
+
+func (r *ReviewsRepository) Delete(id int) error {
+	query := `DELETE FROM reviews WHERE reviews_id = $1`
+
+	_, err := r.DB.Exec(context.Background(), query, id)
+	return err
+}
