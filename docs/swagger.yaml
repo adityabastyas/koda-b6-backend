@@ -26,6 +26,13 @@ definitions:
       email:
         type: string
     type: object
+  models.ProductImagesInput:
+    properties:
+      path:
+        type: string
+      product_id:
+        type: integer
+    type: object
   models.ProductSizeInput:
     properties:
       add_price:
@@ -408,6 +415,29 @@ paths:
       summary: Edit discount
       tags:
       - discount
+  /product-images:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product Images Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductImagesInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah image baru
+      tags:
+      - product-images
   /product-images/{product_id}:
     get:
       parameters:

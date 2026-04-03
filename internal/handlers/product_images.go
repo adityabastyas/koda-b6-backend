@@ -51,6 +51,14 @@ func (h *ProductImagesHandler) GetByProductID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah image baru
+// @Tags product-images
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.ProductImagesInput true "Product Images Input"
+// @Success 200 {object} models.Response
+// @Router /product-images [post]
 func (h *ProductImagesHandler) Create(ctx *gin.Context) {
 	var input models.ProductImagesInput
 

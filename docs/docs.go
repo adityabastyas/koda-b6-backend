@@ -472,6 +472,44 @@ const docTemplate = `{
                 }
             }
         },
+        "/product-images": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "product-images"
+                ],
+                "summary": "Tambah image baru",
+                "parameters": [
+                    {
+                        "description": "Product Images Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ProductImagesInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/product-images/{product_id}": {
             "get": {
                 "produces": [
@@ -1339,6 +1377,17 @@ const docTemplate = `{
             "properties": {
                 "email": {
                     "type": "string"
+                }
+            }
+        },
+        "models.ProductImagesInput": {
+            "type": "object",
+            "properties": {
+                "path": {
+                    "type": "string"
+                },
+                "product_id": {
+                    "type": "integer"
                 }
             }
         },
