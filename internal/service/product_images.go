@@ -22,3 +22,13 @@ func (s *ProductImagesService) GetByProductID(productID int) ([]models.ProductIm
 	}
 	return s.repo.GetByProductID(productID)
 }
+
+func (s *ProductImagesService) Create(input models.ProductImagesInput) error {
+	if input.ProductID <= 0 {
+		return errors.New("product id tidak valid")
+	}
+	if input.Path == "" {
+		return errors.New("path tidak boleh kosong")
+	}
+	return s.repo.Create(input)
+}
