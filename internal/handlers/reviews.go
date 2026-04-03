@@ -51,6 +51,13 @@ func (h *ReviewsHandler) GetByProductID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Ambil semua review berdasarkan user ID
+// @Tags reviews
+// @Produce json
+// @Security BearerAuth
+// @Param user_id path int true "User ID"
+// @Success 200 {object} models.Response
+// @Router /reviews/user/{user_id} [get]
 func (h *ReviewsHandler) GetByUserID(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 	if err != nil {
