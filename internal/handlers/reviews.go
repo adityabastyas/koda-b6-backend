@@ -84,6 +84,15 @@ func (h *ReviewsHandler) GetByUserID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah review baru
+// @Tags reviews
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param user_id path int true "User ID"
+// @Param input body models.ReviewsInput true "Reviews Input"
+// @Success 200 {object} models.Response
+// @Router /reviews/{user_id} [post]
 func (h *ReviewsHandler) Create(ctx *gin.Context) {
 	userID, err := strconv.Atoi(ctx.Param("user_id"))
 	if err != nil {

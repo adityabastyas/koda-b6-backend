@@ -1162,6 +1162,51 @@ const docTemplate = `{
                 }
             }
         },
+        "/reviews/{user_id}": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "reviews"
+                ],
+                "summary": "Tambah review baru",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "User ID",
+                        "name": "user_id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Reviews Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.ReviewsInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/transaction-product/{transaction_id}": {
             "post": {
                 "security": [
@@ -1550,6 +1595,20 @@ const docTemplate = `{
                 "result": {},
                 "success": {
                     "type": "boolean"
+                }
+            }
+        },
+        "models.ReviewsInput": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string"
+                },
+                "product_id": {
+                    "type": "integer"
+                },
+                "rating": {
+                    "type": "integer"
                 }
             }
         },

@@ -77,6 +77,15 @@ definitions:
       success:
         type: boolean
     type: object
+  models.ReviewsInput:
+    properties:
+      message:
+        type: string
+      product_id:
+        type: integer
+      rating:
+        type: integer
+    type: object
   models.TransactionInput:
     properties:
       address:
@@ -807,6 +816,34 @@ paths:
       summary: Register user baru
       tags:
       - auth
+  /reviews/{user_id}:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: User ID
+        in: path
+        name: user_id
+        required: true
+        type: integer
+      - description: Reviews Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.ReviewsInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah review baru
+      tags:
+      - reviews
   /reviews/product/{product_id}:
     get:
       parameters:
