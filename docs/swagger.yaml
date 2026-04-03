@@ -408,6 +408,24 @@ paths:
       summary: Edit discount
       tags:
       - discount
+  /product-images/{product_id}:
+    get:
+      parameters:
+      - description: Product ID
+        in: path
+        name: product_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua image berdasarkan product ID
+      tags:
+      - product-images
   /product-sizes:
     post:
       consumes:

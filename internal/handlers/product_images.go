@@ -19,6 +19,12 @@ func NewProductImagesHandler(service *service.ProductImagesService) *ProductImag
 	}
 }
 
+// @Summary Ambil semua image berdasarkan product ID
+// @Tags product-images
+// @Produce json
+// @Param product_id path int true "Product ID"
+// @Success 200 {object} models.Response
+// @Router /product-images/{product_id} [get]
 func (h *ProductImagesHandler) GetByProductID(ctx *gin.Context) {
 	productID, err := strconv.Atoi(ctx.Param("product_id"))
 	if err != nil {
