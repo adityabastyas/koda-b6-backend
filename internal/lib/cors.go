@@ -2,7 +2,6 @@ package lib
 
 import (
 	"net/http"
-	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -10,7 +9,9 @@ import (
 func CorsMiddleware() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 
-		ctx.Header("Access-Control-Allow-Origin", os.Getenv("FRONTEND_URL"))
+		// ctx.Header("Access-Control-Allow-Origin", os.Getenv("FRONTEND_URL"))
+		ctx.Header("Access-Control-Allow-Origin", "*")
+
 		ctx.Header("Access-Control-Allow-Headers", "Content-Type, Authorization")
 		ctx.Header("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS")
 
