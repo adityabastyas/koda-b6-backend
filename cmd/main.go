@@ -22,6 +22,8 @@ func main() {
 
 	r := gin.Default()
 
+	r.Use(lib.CorsMiddleware())
+
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
 	di.Container(r, lib.DB)
