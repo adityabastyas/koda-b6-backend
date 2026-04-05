@@ -38,7 +38,7 @@ func (s *UserService) Register(input models.UserRegisterInput) error {
 
 func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
 	user, err := s.repo.FindByEmail(input.Email)
-	if err != nil || user.Password != input.Password {
+	if err != nil {
 		return nil, errors.New("email atau password salah")
 	}
 
