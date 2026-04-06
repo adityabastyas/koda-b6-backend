@@ -7,9 +7,9 @@ type User struct {
 	FullName   string    `json:"full_name" db:"full_name"`
 	Email      string    `json:"email" db:"email"`
 	Password   string    `json:"password" db:"password"`
-	Address    string    `json:"address" db:"address"`
-	Phone      string    `json:"phone" db:"phone"`
-	ProfilePic string    `json:"profile_pic" db:"profile_pic"`
+	Address    *string   `json:"address" db:"address"`
+	Phone      *string   `json:"phone" db:"phone"`
+	ProfilePic *string   `json:"profile_pic" db:"profile_pic"`
 	CreatedAt  time.Time `json:"created_at" db:"created_at"`
 }
 

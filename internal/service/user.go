@@ -2,9 +2,12 @@ package service
 
 import (
 	"errors"
+	"fmt"
 	"koda-b6-backend1/internal/lib"
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/repository"
+
+	"github.com/jackc/pgx/v5"
 )
 
 type UserService struct {
@@ -39,12 +42,25 @@ func (s *UserService) Register(input models.UserRegisterInput) error {
 func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
 	user, err := s.repo.FindByEmail(input.Email)
 	if err != nil {
-		return nil, errors.New("email atau password salah")
+		if errors.Is(err, pgx.ErrNoRows) {
+			return nil, errors.New("email atau password salah")
+		}
+		return nil, fmt.Errorf("database error: %w", err)
 	}
 
-	if !lib.VerifyPassword(input.Password, user.Password) {
-		return nil, errors.New("email atau password salah")
+	fmt.Println("User found:", user.Email)
+	fmt.Println("Hash from DB:", user.Password) // Debug: see what's stored
+
+	valid, err := lib.VerifyPassword(input.Password, user.Password)
+	if err != nil {
+		fmt.Println("Verify error:", err) // Debug: see the error
+		return nil, fmt.Errorf("failed to verify password: %w", err)
 	}
+
+	if !valid {
+		return nil, fmt.Errorf("invalid email or password")
+	}
+
 	return user, nil
 }
 
