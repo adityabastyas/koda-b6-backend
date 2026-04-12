@@ -17,6 +17,7 @@ func AuthMiddleware() gin.HandlerFunc {
 				Success: false,
 				Message: "Unauthorized",
 			})
+			ctx.Abort()
 			return
 		}
 
@@ -28,6 +29,7 @@ func AuthMiddleware() gin.HandlerFunc {
 				Success: false,
 				Message: err.Error(),
 			})
+			ctx.Abort()
 			return
 		}
 

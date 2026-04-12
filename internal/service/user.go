@@ -49,11 +49,11 @@ func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
 	}
 
 	fmt.Println("User found:", user.Email)
-	fmt.Println("Hash from DB:", user.Password) // Debug: see what's stored
+	fmt.Println("Hash from DB:", user.Password)
 
 	valid, err := lib.VerifyPassword(input.Password, user.Password)
 	if err != nil {
-		fmt.Println("Verify error:", err) // Debug: see the error
+		fmt.Println("Verify error:", err) 
 		return nil, fmt.Errorf("failed to verify password: %w", err)
 	}
 

@@ -81,8 +81,31 @@ Host: localhost:8888
 POST /auth/register HTTP/1.1
 Host: localhost:8888
 Content-Type: application/json
+
 {
-    "full_name": "test",
-    "email": "test123@mail.com",
+    "full_name": "ha",
+    "email": "ha@mail.com",
+    "password": "123456"
+}
+
+###
+POST /auth/login HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+    "email": "ha@mail.com",
+    "password": "123456"
+}
+
+
+###
+
+POST /auth/forgot-password HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+    "email": "hehe@mail.com",
     "password": "123456"
 }

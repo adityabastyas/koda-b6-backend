@@ -126,7 +126,8 @@ func (h *TransactionHandler) Create(ctx *gin.Context) {
 		return
 	}
 
-	if err := h.service.Create(input); err != nil {
+	transaction, err := h.service.Create(input)
+	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
 			Message: err.Error(),
@@ -137,6 +138,9 @@ func (h *TransactionHandler) Create(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, models.Response{
 		Success: true,
 		Message: "transaksi berhasil di buat",
+		Result: gin.H{
+			"transaction_id": transaction.TransactionID,
+		},
 	})
 }
 
