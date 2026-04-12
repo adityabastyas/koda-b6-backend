@@ -68,7 +68,7 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 		return
 	}
 
-	token, _ := lib.GenerateToken(results.Email)
+	token, _ := lib.GenerateToken(results.UserID)
 
 	ctx.JSON(http.StatusOK, models.Response{Success: true, Message: "login success", Result: gin.H{
 		"user":  results,

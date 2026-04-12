@@ -1,6 +1,8 @@
 package handlers
 
 import (
+	"errors"
+	"fmt"
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/service"
 	"net/http"
@@ -125,6 +127,19 @@ func (h *TransactionHandler) Create(ctx *gin.Context) {
 		})
 		return
 	}
+
+	userID, exist := ctx.Get("user_id")
+	if !exist {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: errors.New("silahkan login terlebih dahulu").Error(),
+		})
+		return
+	}
+
+	input.UserID = userID.(int)
+
+	fmt.Println(input)
 
 	transaction, err := h.service.Create(input)
 	if err != nil {

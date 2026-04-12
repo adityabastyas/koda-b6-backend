@@ -75,6 +75,16 @@ Content-Type: application/json
 GET /products HTTP/1.1
 Host: localhost:8888
 
+###
+
+GET /product-variant/1 HTTP/1.1
+Host: localhost:8888
+
+###
+
+GET /product-sizes/2 HTTP/1.1
+Host: localhost:8888
+
 
 ###
 
