@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/service"
 	"net/http"
@@ -24,7 +25,7 @@ func (h *ProductHandler) GetAll(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "terjadi kesalahan pada server",
 		})
 		return
 	}
@@ -52,15 +53,20 @@ func (h *ProductHandler) GetByID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "product tidak ditemukan",
 		})
 		return
 	}
 
-	ctx.JSON(http.StatusOK, models.Response{
-		Success: true,
-		Message: "success",
-		Result:  product,
+	ctx.JSON(http.StatusOK, gin.H{
+		"success": true,
+		"message": "success",
+		"result":  product,
+		"links": gin.H{
+			"self":   fmt.Sprintf("/products/%d", product.ProductID),
+			"update": fmt.Sprintf("/products/%d", product.ProductID),
+			"delete": fmt.Sprintf("/products/%d", product.ProductID),
+		},
 	})
 }
 
@@ -78,7 +84,7 @@ func (h *ProductHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan product",
 		})
 		return
 	}
@@ -112,7 +118,7 @@ func (h *ProductHandler) Update(ctx *gin.Context) {
 	if err := h.service.Update(id, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal update product",
 		})
 		return
 	}
@@ -137,7 +143,7 @@ func (h *ProductHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus product",
 		})
 		return
 	}
