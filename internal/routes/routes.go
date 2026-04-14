@@ -29,28 +29,35 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	productGroup.GET("", productHandler.GetAll)
 	productGroup.GET("/:id", productHandler.GetByID)
 
-	productGroup.Use(lib.AuthMiddleware())
-	productGroup.POST("", productHandler.Create)
-	productGroup.PATCH("/:id", productHandler.Update)
-	productGroup.DELETE("/:id", productHandler.Delete)
+	productAdmin := r.Group("/products")
+	productAdmin.Use(lib.AuthMiddleware(), lib.RBACMiddleware("admin"))
+
+	productAdmin.POST("", productHandler.Create)
+	productAdmin.PATCH("/:id", productHandler.Update)
+	productAdmin.DELETE("/:id", productHandler.Delete)
 
 	//kategory
 	kategoryGroup := r.Group("/kategorys")
 	kategoryGroup.GET("", kategoryHandler.GetAll)
 	kategoryGroup.GET("/:id", kategoryHandler.GetByID)
-	kategoryGroup.Use(lib.AuthMiddleware())
-	kategoryGroup.POST("", kategoryHandler.Create)
-	kategoryGroup.PATCH("/:id", kategoryHandler.Update)
-	kategoryGroup.DELETE("/:id", kategoryHandler.Delete)
+
+	kategoryAdmin := r.Group("/kategorys")
+	kategoryAdmin.Use(lib.AuthMiddleware(), lib.RBACMiddleware("admin"))
+
+	kategoryAdmin.POST("", kategoryHandler.Create)
+	kategoryAdmin.PATCH("/:id", kategoryHandler.Update)
+	kategoryAdmin.DELETE("/:id", kategoryHandler.Delete)
 
 	// promo routes
 	promoGroup := r.Group("/promos")
 	promoGroup.GET("", promoHandler.GetAll)
 	promoGroup.GET("/:id", promoHandler.GetByID)
-	promoGroup.Use(lib.AuthMiddleware())
-	promoGroup.POST("", promoHandler.Create)
-	promoGroup.PATCH("/:id", promoHandler.Update)
-	promoGroup.DELETE("/:id", promoHandler.Delete)
+	promoAdmin := r.Group("/promos")
+	promoAdmin.Use(lib.AuthMiddleware(), lib.RBACMiddleware("admin"))
+
+	promoAdmin.POST("", promoHandler.Create)
+	promoAdmin.PATCH("/:id", promoHandler.Update)
+	promoAdmin.DELETE("/:id", promoHandler.Delete)
 
 	//discount
 	discountGroup := r.Group("/discounts")
@@ -119,9 +126,11 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 
 	// reviews routes
 	reviewsGroup := r.Group("/reviews")
+	reviewsGroup.GET("", reviewsHandler.GetAll)
 	reviewsGroup.GET("/product/:product_id", reviewsHandler.GetByProductID)
-	reviewsGroup.GET("/user/:user_id", reviewsHandler.GetByUserID)
+
 	reviewsGroup.Use(lib.AuthMiddleware())
+	reviewsGroup.GET("/user/:user_id", reviewsHandler.GetByUserID)
 	reviewsGroup.POST("/:user_id", reviewsHandler.Create)
 	reviewsGroup.DELETE("/:id", reviewsHandler.Delete)
 
