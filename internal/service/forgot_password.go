@@ -3,6 +3,7 @@ package service
 import (
 	"errors"
 	"fmt"
+	"koda-b6-backend1/internal/lib"
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/repository"
 	"math/rand"
@@ -44,7 +45,12 @@ func (s *ForgotPasswordService) ResetPassword(input models.ResetPasswordInput, e
 		return errors.New("code tidak valid atau sudah expired")
 	}
 
-	if err := s.userRepo.UpdatePassword(email, input.NewPassword); err != nil {
+	hashedPassword, err := lib.HashPassword(input.NewPassword)
+	if err != nil {
+		return errors.New("gagal hash password")
+	}
+
+	if err := s.userRepo.UpdatePassword(email, hashedPassword); err != nil {
 		return errors.New("gagal update password")
 	}
 
