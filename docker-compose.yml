@@ -1,0 +1,36 @@
+services:
+  pg:
+    image: postgres:15
+    env_file:
+      - .env
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    networks:
+      - webapps
+    restart: always
+
+  redis:
+    image: redis:7
+    networks:
+      - webapps
+    restart: always 
+
+  backend:
+    container_name: backend-adit
+    image: ghcr.io/adityabastyas/koda-b6-backend-cicd:latest
+    env_file:
+      - .env
+    ports:
+      - "8888:8888"
+    depends_on:
+      - pg
+      - redis
+    networks:
+      - webapps
+    restart: always
+
+volumes:
+  pgdata:
+
+networks:
+  webapps:
