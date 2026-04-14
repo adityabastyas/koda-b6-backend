@@ -54,3 +54,38 @@ func (h *UserHandler) UploadPhoto(ctx *gin.Context) {
 		Result:  path,
 	})
 }
+
+func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
+	var input models.UserUpdateInput
+
+	if err := ctx.ShouldBindJSON(&input); err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: "invalid body",
+		})
+		return
+	}
+
+	userID, exist := ctx.Get("user_id")
+	if !exist {
+		ctx.JSON(http.StatusUnauthorized, models.Response{
+			Success: false,
+			Message: "unauthorized",
+		})
+		return
+	}
+
+	err := h.service.UpdateProfile(userID.(int), input)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "profile berhasil diupdate",
+	})
+}
