@@ -72,10 +72,24 @@ Content-Type: application/json
 
 ###
 
+POST  /products HTTP/1.1
+Host: localhost:8888
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NzYxNjA0MDMsInJvbGUiOiJhZG1pbiIsInVzZXJfaWQiOjR9.LR35O7f7-XxZFlBVKn020L8ekbnI-vkvxeSC-pNXY7Y
+Content-Type: application/json
+
+{
+  "name": "Coffee Latte",
+  "price": 20000,
+  "kategory_id": 2
+}
+
+###
 GET /products HTTP/1.1
 Host: localhost:8888
 
 ###
+
+
 
 GET /product-variant/1 HTTP/1.1
 Host: localhost:8888
@@ -85,7 +99,8 @@ Host: localhost:8888
 GET /product-sizes/2 HTTP/1.1
 Host: localhost:8888
 
-
+###
+GET http://localhost:8888/reviews
 ###
 
 POST /auth/register HTTP/1.1
@@ -93,8 +108,8 @@ Host: localhost:8888
 Content-Type: application/json
 
 {
-    "full_name": "ha",
-    "email": "ha@mail.com",
+    "full_name": "Admin",
+    "email": "admin@mail.com",
     "password": "123456"
 }
 
@@ -104,7 +119,7 @@ Host: localhost:8888
 Content-Type: application/json
 
 {
-    "email": "ha@mail.com",
+    "email": "admin@mail.com",
     "password": "123456"
 }
 
