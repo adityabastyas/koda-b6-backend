@@ -48,6 +48,24 @@ func (h *UserHandler) UploadPhoto(ctx *gin.Context) {
 		return
 	}
 
+	userID, exist := ctx.Get("user_id")
+	if !exist {
+		ctx.JSON(http.StatusUnauthorized, models.Response{
+			Success: false,
+			Message: "unauthorized",
+		})
+		return
+	}
+
+	err = h.service.UpdateProfilePic(userID.(int), path)
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
 	ctx.JSON(http.StatusOK, models.Response{
 		Success: true,
 		Message: "upload success",
