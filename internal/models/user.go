@@ -11,6 +11,7 @@ type User struct {
 	Phone      *string   `json:"phone" db:"phone"`
 	ProfilePic *string   `json:"profile_pic" db:"profile_pic"`
 	CreatedAt  time.Time `json:"created_at" db:"created_at"`
+	Role       string    `json:"role" db:"role"`
 }
 
 type UserRegisterInput struct {
