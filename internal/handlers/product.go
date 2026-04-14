@@ -20,6 +20,12 @@ func NewProductHandler(service *service.ProductService) *ProductHandler {
 	}
 }
 
+// @Summary Ambil semua product
+// @Tags product
+// @Produce json
+// @Success 200 {object} models.Response
+// @Failure 500 {object} models.Response
+// @Router /products [get]
 func (h *ProductHandler) GetAll(ctx *gin.Context) {
 	products, err := h.service.GetAll()
 	if err != nil {
@@ -37,6 +43,14 @@ func (h *ProductHandler) GetAll(ctx *gin.Context) {
 	})
 }
 
+// @Summary Ambil 1 product berdasarkan ID
+// @Tags product
+// @Produce json
+// @Param id path int true "Product ID"
+// @Success 200 {object} map[string]interface{}
+// @Failure 400 {object} models.Response
+// @Failure 404 {object} models.Response
+// @Router /products/{id} [get]
 func (h *ProductHandler) GetByID(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 
@@ -70,6 +84,15 @@ func (h *ProductHandler) GetByID(ctx *gin.Context) {
 	})
 }
 
+// @Summary Tambah product baru
+// @Tags product
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param product body models.ProductInput true "Product Input"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /products [post]
 func (h *ProductHandler) Create(ctx *gin.Context) {
 	var input models.ProductInput
 
@@ -95,6 +118,16 @@ func (h *ProductHandler) Create(ctx *gin.Context) {
 	})
 }
 
+// @Summary Edit product
+// @Tags product
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Product ID"
+// @Param product body models.ProductInput true "Product Input"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /products/{id} [patch]
 func (h *ProductHandler) Update(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := strconv.Atoi(idStr)
@@ -129,6 +162,14 @@ func (h *ProductHandler) Update(ctx *gin.Context) {
 	})
 }
 
+// @Summary Hapus product
+// @Tags product
+// @Produce json
+// @Security BearerAuth
+// @Param id path int true "Product ID"
+// @Success 200 {object} models.Response
+// @Failure 400 {object} models.Response
+// @Router /products/{id} [delete]
 func (h *ProductHandler) Delete(ctx *gin.Context) {
 	idStr := ctx.Param("id")
 	id, err := strconv.Atoi(idStr)

@@ -33,6 +33,19 @@ definitions:
       product_id:
         type: integer
     type: object
+  models.ProductInput:
+    properties:
+      description:
+        type: string
+      image_url:
+        type: string
+      kategory_id:
+        type: integer
+      name:
+        type: string
+      price:
+        type: integer
+    type: object
   models.ProductSizeInput:
     properties:
       add_price:
@@ -126,15 +139,24 @@ definitions:
         type: string
       password:
         type: string
+    required:
+    - email
+    - password
     type: object
   models.UserRegisterInput:
     properties:
       email:
         type: string
       full_name:
+        minLength: 3
         type: string
       password:
+        minLength: 6
         type: string
+    required:
+    - email
+    - full_name
+    - password
     type: object
 info:
   contact: {}
@@ -697,6 +719,129 @@ paths:
       summary: Ambil 1 variant berdasarkan ID
       tags:
       - product-variant
+  /products:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua product
+      tags:
+      - product
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product Input
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Tambah product baru
+      tags:
+      - product
+  /products/{id}:
+    delete:
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Hapus product
+      tags:
+      - product
+    get:
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil 1 product berdasarkan ID
+      tags:
+      - product
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Product Input
+        in: body
+        name: product
+        required: true
+        schema:
+          $ref: '#/definitions/models.ProductInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Edit product
+      tags:
+      - product
   /promos:
     get:
       produces:
