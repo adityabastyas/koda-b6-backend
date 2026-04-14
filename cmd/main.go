@@ -19,10 +19,13 @@ func main() {
 	godotenv.Load()
 
 	lib.ConnectDB()
+	lib.InitRedis()
 
 	r := gin.Default()
 
 	r.Use(lib.CorsMiddleware())
+
+	r.Static("/uploads", "./uploads")
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
 
