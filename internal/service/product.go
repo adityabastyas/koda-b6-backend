@@ -50,7 +50,27 @@ func (s *ProductService) GetByID(id int) (*models.Product, error) {
 		return nil, errors.New("id tidak valid")
 	}
 
-	return s.repo.GetByID(id)
+	key := fmt.Sprintf("product:%d", id)
+
+	val, err := lib.RDB.Get(lib.Ctx, key).Result()
+	if err == nil {
+		var product models.Product
+		json.Unmarshal([]byte(val), &product)
+		fmt.Println("ambil product by id dari redis 🔥")
+		return &product, nil
+	}
+
+	product, err := s.repo.GetByID(id)
+	if err != nil {
+		return nil, err
+	}
+
+	jsonData, _ := json.Marshal(product)
+	lib.RDB.Set(lib.Ctx, key, jsonData, 5*time.Minute)
+
+	fmt.Println("ambil product by id dari DB + simpan redis")
+
+	return product, nil
 }
 
 func (s *ProductService) Create(input models.ProductInput) error {
@@ -90,7 +110,8 @@ func (s *ProductService) Delete(id int) error {
 		return errors.New("id tidak valid")
 	}
 
-	lib.RDB.Del(lib.Ctx, "products")
+	key := fmt.Sprintf("product:%d", id)
+	lib.RDB.Del(lib.Ctx, "products", key)
 
 	return s.repo.Delete(id)
 }
