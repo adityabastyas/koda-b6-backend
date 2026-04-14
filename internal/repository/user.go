@@ -19,7 +19,7 @@ func NewUserRepository(db *pgxpool.Pool) *UserRepository {
 }
 
 func (r *UserRepository) GetAll() ([]models.User, error) {
-	query := `SELECT user_id, full_name, email, password, address, phone, profile_pic, created_at FROM users`
+	query := `SELECT user_id, full_name, email, password, address, phone, profile_pic, created_at, role FROM users`
 
 	rows, err := r.DB.Query(context.Background(), query)
 	if err != nil {
@@ -36,7 +36,7 @@ func (r *UserRepository) GetAll() ([]models.User, error) {
 }
 
 func (r *UserRepository) FindByEmail(email string) (*models.User, error) {
-	query := `SELECT user_id, full_name, email, password, address, phone, profile_pic, created_at FROM users WHERE email = $1`
+	query := `SELECT user_id, full_name, email, password, address, phone, profile_pic, created_at, role FROM users WHERE email = $1`
 
 	rows, err := r.DB.Query(context.Background(), query, email)
 	if err != nil {
@@ -86,5 +86,16 @@ func (r *UserRepository) UpdateProfile(userID int, input models.UserUpdateInput)
 		userID,
 	)
 
+	return err
+}
+
+func (r *UserRepository) UpdateProfilePic(userID int, path string) error {
+	query := `
+	UPDATE users
+	SET profile_pic = $1
+	WHERE user_id = $2
+	`
+
+	_, err := r.DB.Exec(context.Background(), query, path, userID)
 	return err
 }
