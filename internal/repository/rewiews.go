@@ -19,7 +19,20 @@ func NewReviewsRepository(db *pgxpool.Pool) *ReviewsRepository {
 }
 
 func (r *ReviewsRepository) GetByProductID(productID int) ([]models.Reviews, error) {
-	query := `SELECT reviews_id, product_id, user_id, message, rating FROM reviews WHERE product_id = $1`
+	query := `
+SELECT 
+  r.reviews_id,
+  r.product_id,
+  r.user_id,
+  r.message,
+  r.rating,
+  u.full_name,
+  u.profile_pic
+FROM reviews r
+JOIN users u ON r.user_id = u.user_id
+ORDER BY r.reviews_id DESC
+LIMIT 10
+`
 
 	rows, err := r.DB.Query(context.Background(), query, productID)
 	if err != nil {
@@ -36,7 +49,20 @@ func (r *ReviewsRepository) GetByProductID(productID int) ([]models.Reviews, err
 }
 
 func (r *ReviewsRepository) GetByUserID(userID int) ([]models.Reviews, error) {
-	query := `SELECT reviews_id, product_id, user_id, message, rating FROM reviews WHERE user_id = $1`
+	query := `
+SELECT 
+  r.reviews_id,
+  r.product_id,
+  r.user_id,
+  r.message,
+  r.rating,
+  u.full_name,
+  u.profile_pic
+FROM reviews r
+JOIN users u ON r.user_id = u.user_id
+ORDER BY r.reviews_id DESC
+LIMIT 10
+`
 
 	rows, err := r.DB.Query(context.Background(), query, userID)
 	if err != nil {
@@ -64,4 +90,34 @@ func (r *ReviewsRepository) Delete(id int) error {
 
 	_, err := r.DB.Exec(context.Background(), query, id)
 	return err
+}
+
+func (r *ReviewsRepository) GetAll() ([]models.Reviews, error) {
+	query := `
+SELECT 
+  r.reviews_id,
+  r.product_id,
+  r.user_id,
+  r.message,
+  r.rating,
+  u.full_name,
+  u.profile_pic
+FROM reviews r
+JOIN users u ON r.user_id = u.user_id
+ORDER BY r.reviews_id DESC
+LIMIT 10
+`
+
+	rows, err := r.DB.Query(context.Background(), query)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	reviews, err := pgx.CollectRows(rows, pgx.RowToStructByName[models.Reviews])
+	if err != nil {
+		return nil, err
+	}
+
+	return reviews, nil
 }
