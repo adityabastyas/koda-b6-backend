@@ -53,3 +53,7 @@ func (s *ReviewsService) Delete(id int) error {
 	}
 	return s.repo.Delete(id)
 }
+
+func (s *ReviewsService) GetAll() ([]models.Reviews, error) {
+	return s.repo.GetAll()
+}
