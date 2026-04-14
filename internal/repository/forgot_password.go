@@ -19,7 +19,7 @@ func NewForgotPasswordRepository(db *pgxpool.Pool) *ForgotPasswordRepository {
 }
 
 func (r *ForgotPasswordRepository) GetDataByEmailAndCode(email, code string) (*models.ForgotPassword, error) {
-	query := `SELECT id, email, code, created_at, updated_at, deleted_at FROM forgot_password WHERE email = $1 AND code = $2`
+	query := `SELECT id, email, code, updated_at, deleted_at FROM forgot_password WHERE email = $1 AND code = $2`
 
 	rows, err := r.DB.Query(context.Background(), query, email, code)
 	if err != nil {
