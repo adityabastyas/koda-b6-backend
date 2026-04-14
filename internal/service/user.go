@@ -53,7 +53,7 @@ func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
 
 	valid, err := lib.VerifyPassword(input.Password, user.Password)
 	if err != nil {
-		fmt.Println("Verify error:", err) 
+		fmt.Println("Verify error:", err)
 		return nil, fmt.Errorf("failed to verify password: %w", err)
 	}
 
@@ -66,4 +66,8 @@ func (s *UserService) Login(input models.UserLoginInput) (*models.User, error) {
 
 func (s *UserService) GetAll() ([]models.User, error) {
 	return s.repo.GetAll()
+}
+
+func (s *UserService) UpdateProfile(userID int, input models.UserUpdateInput) error {
+	return s.repo.UpdateProfile(userID, input)
 }
