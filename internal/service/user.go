@@ -71,3 +71,7 @@ func (s *UserService) GetAll() ([]models.User, error) {
 func (s *UserService) UpdateProfile(userID int, input models.UserUpdateInput) error {
 	return s.repo.UpdateProfile(userID, input)
 }
+
+func (s *UserService) UpdateProfilePic(userID int, path string) error {
+	return s.repo.UpdateProfilePic(userID, path)
+}
