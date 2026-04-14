@@ -88,6 +88,10 @@ GET /products HTTP/1.1
 Host: localhost:8888
 
 ###
+GET /products/1 HTTP/1.1
+Host: localhost:8888
+
+###
 
 
 
@@ -131,6 +135,16 @@ Host: localhost:8888
 Content-Type: application/json
 
 {
-    "email": "hehe@mail.com",
-    "password": "123456"
+    "email": "h@mail.com"
+   
+}
+
+###
+
+PATCH http://localhost:8888/auth/forgot-password?email=h@mail.com
+Content-Type: application/json
+
+{
+  "code": "828615",
+  "new_password": "1234567"
 }
