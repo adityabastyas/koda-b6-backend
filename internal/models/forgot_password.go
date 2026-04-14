@@ -5,7 +5,7 @@ import "time"
 type ForgotPassword struct {
 	ID        int        `json:"id" db:"id"`
 	Email     string     `json:"email" db:"email"`
-	Code      string     `json:"code" db:"db"`
+	Code      string     `json:"code" db:"code"`
 	UpdatedAt *time.Time `json:"updated_at" db:"updated_at"`
 	DeletedAt *time.Time `json:"deleted_at" db:"deleted_at"`
 }
