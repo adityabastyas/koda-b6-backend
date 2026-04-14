@@ -21,6 +21,7 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	userGroup.Use(lib.AuthMiddleware())
 	userGroup.GET("", userHandler.GetAll)
 	userGroup.POST("/upload", userHandler.UploadPhoto)
+	userGroup.PATCH("/profile", userHandler.UpdateProfile)
 
 	//product
 	productGroup := r.Group("/products")
