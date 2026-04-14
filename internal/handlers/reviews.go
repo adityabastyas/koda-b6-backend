@@ -156,3 +156,20 @@ func (h *ReviewsHandler) Delete(ctx *gin.Context) {
 		Message: "review berhasil dihapus",
 	})
 }
+
+func (h *ReviewsHandler) GetAll(ctx *gin.Context) {
+	reviews, err := h.service.GetAll()
+	if err != nil {
+		ctx.JSON(http.StatusInternalServerError, models.Response{
+			Success: false,
+			Message: err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, models.Response{
+		Success: true,
+		Message: "success",
+		Result:  reviews,
+	})
+}
