@@ -29,3 +29,10 @@ type Response struct {
 	Message string `json:"message"`
 	Result  any    `json:"result"`
 }
+
+type UserUpdateInput struct {
+	FullName string  `json:"full_name"`
+	Email    string  `json:"email"`
+	Phone    *string `json:"phone"`
+	Address  *string `json:"address"`
+}
