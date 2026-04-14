@@ -19,6 +19,8 @@ FROM alpine:latest
 
 WORKDIR /app
 
+RUN apk add --no-cache ca-certificates
+
 COPY --from=build /workspace/backend /app
 
 EXPOSE 8888
