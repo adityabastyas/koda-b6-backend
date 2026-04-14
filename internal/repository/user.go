@@ -65,3 +65,26 @@ func (r *UserRepository) UpdatePassword(email, newPassword string) error {
 	_, err := r.DB.Exec(context.Background(), query, newPassword, email)
 	return err
 }
+
+func (r *UserRepository) UpdateProfile(userID int, input models.UserUpdateInput) error {
+	query := `
+	UPDATE users
+	SET full_name = $1,
+	    email = $2,
+	    phone = $3,
+	    address = $4
+	WHERE user_id = $5
+	`
+
+	_, err := r.DB.Exec(
+		context.Background(),
+		query,
+		input.FullName,
+		input.Email,
+		input.Phone,
+		input.Address,
+		userID,
+	)
+
+	return err
+}
