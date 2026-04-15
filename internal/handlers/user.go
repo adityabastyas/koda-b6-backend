@@ -23,15 +23,28 @@ func NewUserHandler(service *service.UserService) *UserHandler {
 	}
 }
 
+// @Summary Ambil semua user
+// @Tags user
+// @Produce json
+// @Success 200 {object} models.Response
+// @Router /users [get]
 func (h *UserHandler) GetAll(ctx *gin.Context) {
 	users, err := h.service.GetAll()
 	if err != nil {
-		ctx.JSON(http.StatusInternalServerError, models.Response{Success: false, Message: err.Error()})
+		ctx.JSON(http.StatusInternalServerError, models.Response{Success: false, Message: "gagal mengambil data user"})
 		return
 	}
 	ctx.JSON(http.StatusOK, models.Response{Success: true, Message: "success", Result: users})
 }
 
+// @Summary Upload foto profile
+// @Tags user
+// @Accept multipart/form-data
+// @Produce json
+// @Security BearerAuth
+// @Param file formData file true "Image File"
+// @Success 200 {object} models.Response
+// @Router /users/upload-photo [post]
 func (h *UserHandler) UploadPhoto(ctx *gin.Context) {
 	file, err := ctx.FormFile("file")
 	if err != nil {
@@ -146,6 +159,14 @@ func (h *UserHandler) UploadPhoto(ctx *gin.Context) {
 	})
 }
 
+// @Summary Update profile user
+// @Tags user
+// @Accept json
+// @Produce json
+// @Security BearerAuth
+// @Param input body models.UserUpdateInput true "User Update Input"
+// @Success 200 {object} models.Response
+// @Router /users/profile [patch]
 func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
 	var input models.UserUpdateInput
 
@@ -170,7 +191,7 @@ func (h *UserHandler) UpdateProfile(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal update profile",
 		})
 		return
 	}
