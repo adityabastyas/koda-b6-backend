@@ -20,7 +20,7 @@ func NewCartItemHandler(service *service.CartItemService) *CartItemHandler {
 }
 
 // @Summary Ambil semua item di cart berdasarkan user ID
-// Tags cart-item
+// @Tags cart-item
 // @Produce json
 // @Security BearerAuth
 // @Param user_id path int true "User ID"
@@ -41,7 +41,7 @@ func (h *CartItemHandler) GetByUserID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data cart tidak ditemukan",
 		})
 		return
 	}
@@ -58,7 +58,7 @@ func (h *CartItemHandler) GetByUserID(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @Param user_id path int tru "User ID"
+// @Param user_id path int true "User ID"
 // @Param input body models.CartItemInput true "Cart Item Input"
 // @Success 200 {object} models.Response
 // @Router /cart-items/{user_id} [post]
@@ -84,7 +84,7 @@ func (h *CartItemHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(userID, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan item ke cart",
 		})
 		return
 	}
@@ -100,9 +100,9 @@ func (h *CartItemHandler) Create(ctx *gin.Context) {
 // @Accept json
 // @Produce json
 // @Security BearerAuth
-// @param ud path int true "Cart Item ID"
-// @param quantity query int true "Quantity"
-// @Succes 200 {object} models.Response
+// @Param ud path int true "Cart Item ID"
+// @Param quantity query int true "Quantity"
+// @Success 200 {object} models.Response
 // @Router /cart-items/{id} [patch]
 func (h *CartItemHandler) Update(ctx *gin.Context) {
 	cartItemID, err := strconv.Atoi(ctx.Param("id"))
@@ -126,7 +126,7 @@ func (h *CartItemHandler) Update(ctx *gin.Context) {
 	if err := h.service.Update(cartItemID, quantity); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal update quantity",
 		})
 		return
 	}
@@ -157,7 +157,7 @@ func (h *CartItemHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(cartItemID); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus item dari cart",
 		})
 		return
 	}
