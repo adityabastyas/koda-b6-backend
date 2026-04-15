@@ -39,7 +39,7 @@ func (h *ProductImagesHandler) GetByProductID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data image tidak ditemukan",
 		})
 		return
 	}
@@ -73,7 +73,7 @@ func (h *ProductImagesHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan image",
 		})
 		return
 	}
@@ -104,7 +104,7 @@ func (h *ProductImagesHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus image",
 		})
 		return
 	}
