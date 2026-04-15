@@ -31,7 +31,7 @@ func (h *TransactionHandler) GetAll(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal mengambil data transaction",
 		})
 		return
 	}
@@ -64,7 +64,7 @@ func (h *TransactionHandler) GetByID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data transaction tidak ditemukan",
 		})
 		return
 	}
@@ -97,7 +97,7 @@ func (h *TransactionHandler) GetByUserID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data transaction tidak ditemukan",
 		})
 		return
 	}
@@ -123,7 +123,7 @@ func (h *TransactionHandler) Create(ctx *gin.Context) {
 	if err := ctx.ShouldBindJSON(&input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "invalid body",
 		})
 		return
 	}
@@ -145,7 +145,7 @@ func (h *TransactionHandler) Create(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal membuat transaction",
 		})
 		return
 	}
@@ -179,7 +179,7 @@ func (h *TransactionHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus transaction",
 		})
 		return
 	}
