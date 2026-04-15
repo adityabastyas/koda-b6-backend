@@ -39,7 +39,7 @@ func (h *ProductSizeHandler) GetByProductID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data size tidak ditemukan",
 		})
 		return
 	}
@@ -71,7 +71,7 @@ func (h *ProductSizeHandler) GetByID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data size tidak ditemukan",
 		})
 		return
 	}
@@ -105,7 +105,7 @@ func (h *ProductSizeHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan size",
 		})
 		return
 	}
@@ -147,7 +147,7 @@ func (h *ProductSizeHandler) Update(ctx *gin.Context) {
 	if err := h.service.Update(id, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal update size",
 		})
 		return
 	}
@@ -178,7 +178,7 @@ func (h *ProductSizeHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus size",
 		})
 		return
 	}
