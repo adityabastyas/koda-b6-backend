@@ -11,10 +11,10 @@ type ForgotPassword struct {
 }
 
 type ForgotPasswordInput struct {
-	Email string `json:"email"`
+	Email string `json:"email" binding:"required,email"`
 }
 
 type ResetPasswordInput struct {
-	Code        string `json:"code"`
-	NewPassword string `json:"new_password"`
+	Code        string `json:"code" binding:"required"`
+	NewPassword string `json:"new_password" binding:"required,min=6"`
 }
