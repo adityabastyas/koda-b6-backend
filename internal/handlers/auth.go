@@ -39,7 +39,7 @@ func (h *AuthHandler) Register(ctx *gin.Context) {
 	}
 
 	if err := h.userService.Register(input); err != nil {
-		ctx.JSON(http.StatusBadRequest, models.Response{Success: false, Message: err.Error(), Result: nil})
+		ctx.JSON(http.StatusBadRequest, models.Response{Success: false, Message: "gagal register, periksa kembali data anda", Result: nil})
 		return
 	}
 
@@ -64,7 +64,7 @@ func (h *AuthHandler) Login(ctx *gin.Context) {
 
 	results, err := h.userService.Login(input)
 	if err != nil {
-		ctx.JSON(http.StatusUnauthorized, models.Response{Success: false, Message: err.Error()})
+		ctx.JSON(http.StatusUnauthorized, models.Response{Success: false, Message: "email atau password salah"})
 		return
 	}
 
@@ -98,7 +98,7 @@ func (h *AuthHandler) RequestForgotPassword(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal mengirim kode, periksa email",
 		})
 		return
 	}
@@ -142,7 +142,7 @@ func (h *AuthHandler) ResetPassword(ctx *gin.Context) {
 	if err := h.forgotService.ResetPassword(input, email); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal reset password, kode tidak valid atau expired",
 		})
 		return
 	}
