@@ -9,8 +9,8 @@ type Discount struct {
 }
 
 type DiscountInput struct {
-	ProductID    int    `json:"product_id"`
+	ProductID    int    `json:"product_id" binding:"required,gt=0"`
 	FlashSale    bool   `json:"flash_sale"`
-	Description  string `json:"description"`
-	DiscountRate int    `json:"discount_rate"`
+	Description  string `json:"description" binding:"required,min=3"`
+	DiscountRate int    `json:"discount_rate" binding:"required,gte=0,lte=100"`
 }
