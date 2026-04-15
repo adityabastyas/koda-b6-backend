@@ -40,7 +40,7 @@ func (h *TransactionProductHandler) GetByTransactionID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data product tidak ditemukan",
 		})
 		return
 	}
@@ -84,7 +84,7 @@ func (h *TransactionProductHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(transactionID, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan product ke transaksi",
 		})
 		return
 	}
@@ -115,7 +115,7 @@ func (h *TransactionProductHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus product dari transaksi",
 		})
 		return
 	}
