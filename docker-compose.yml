@@ -1,19 +1,15 @@
 services:
   pg:
-    image: postgres:15
+    image: postgres:18-alpine
     env_file:
       - .env
-    volumes:
-      - pgdata:/var/lib/postgresql/data
     networks:
       - webapps
-    restart: always
 
   redis:
-    image: redis:7
+    image: redis:8.6.1-trixie
     networks:
       - webapps
-    restart: always 
 
   backend:
     container_name: backend-adit
@@ -21,16 +17,23 @@ services:
     env_file:
       - .env
     ports:
-      - "8888:8888"
+      - 20500:8888
+    networks:
+      - webapps
+      - network_adit
     depends_on:
       - pg
       - redis
-    networks:
-      - webapps
-    restart: always
 
-volumes:
-  pgdata:
+  frontend:
+    container_name: web-adit
+    image: nginx:alpine
+    ports:
+      - 20501:80
+    networks:
+      - network_adit
 
 networks:
+  pman_web:
+    external: true
   webapps:
