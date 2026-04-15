@@ -8,6 +8,8 @@ import (
 	"koda-b6-backend1/internal/models"
 	"koda-b6-backend1/internal/repository"
 	"time"
+
+	"github.com/redis/go-redis/v9"
 )
 
 type ProductService struct {
@@ -29,6 +31,8 @@ func (s *ProductService) GetAll() ([]models.Product, error) {
 			fmt.Println("ambil dari redis 🔥")
 			return cached, nil
 		}
+	} else if err != redis.Nil {
+		fmt.Println("redis error:", err)
 	}
 
 	// 2. kalau tidak ada → ambil DB
@@ -39,7 +43,10 @@ func (s *ProductService) GetAll() ([]models.Product, error) {
 
 	// 3. simpan ke redis
 	jsonData, _ := json.Marshal(products)
-	lib.RDB.Set(lib.Ctx, "products", jsonData, 5*time.Minute)
+	err = lib.RDB.Set(lib.Ctx, "products", jsonData, 5*time.Minute).Err()
+	if err != nil {
+		fmt.Println("redis set error:", err)
+	}
 
 	fmt.Println("ambil dari DB + simpan redis")
 
@@ -56,9 +63,12 @@ func (s *ProductService) GetByID(id int) (*models.Product, error) {
 	val, err := lib.RDB.Get(lib.Ctx, key).Result()
 	if err == nil {
 		var product models.Product
-		json.Unmarshal([]byte(val), &product)
-		fmt.Println("ambil product by id dari redis 🔥")
-		return &product, nil
+		if err := json.Unmarshal([]byte(val), &product); err == nil {
+			fmt.Println("ambil product by id dari redis 🔥")
+			return &product, nil
+		}
+	} else if err != redis.Nil {
+		fmt.Println("redis error:", err)
 	}
 
 	product, err := s.repo.GetByID(id)
@@ -66,8 +76,13 @@ func (s *ProductService) GetByID(id int) (*models.Product, error) {
 		return nil, err
 	}
 
-	jsonData, _ := json.Marshal(product)
-	lib.RDB.Set(lib.Ctx, key, jsonData, 5*time.Minute)
+	jsonData, err := json.Marshal(product)
+	if err == nil {
+		err = lib.RDB.Set(lib.Ctx, key, jsonData, 5*time.Minute).Err()
+		if err != nil {
+			fmt.Println("redis set error:", err)
+		}
+	}
 
 	fmt.Println("ambil product by id dari DB + simpan redis")
 
