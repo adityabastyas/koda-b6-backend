@@ -9,8 +9,8 @@ type Promo struct {
 }
 
 type PromoInput struct {
-	Title         string `json:"title"`
-	Description   string `json:"description"`
-	PromoType     string `json:"promo_type"`
-	DiscountValue int    `json:"discount_value"`
+	Title         string `json:"title" binding:"required,min=3"`
+	Description   string `json:"description" binding:"required"`
+	PromoType     string `json:"promo_type" binding:"required,oneof=percentage nominal"`
+	DiscountValue int    `json:"discount_value" binding:"required,gt=0"`
 }

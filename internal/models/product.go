@@ -10,9 +10,9 @@ type Product struct {
 }
 
 type ProductInput struct {
-	KategoryID  int    `json:"kategory_id"`
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Price       int    `json:"price"`
-	ImageURL    string `json:"image_url"`
+	KategoryID  int    `json:"kategory_id" binding:"required,gt=0"`
+	Name        string `json:"name" binding:"required,min=3"`
+	Description string `json:"description" binding:"required,min=5"`
+	Price       int    `json:"price" binding:"required,gt=0"`
+	ImageURL    string `json:"image_url" binding:"required,url"`
 }

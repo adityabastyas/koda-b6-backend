@@ -6,5 +6,5 @@ type Kategory struct {
 }
 
 type KategoryInput struct {
-	Name string `json:"name"`
+	Name string `json:"name" binding:"required,min=3"`
 }

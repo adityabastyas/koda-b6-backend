@@ -11,7 +11,7 @@ type Reviews struct {
 }
 
 type ReviewsInput struct {
-	ProductID int    `json:"product_id"`
-	Message   string `json:"message"`
-	Rating    int    `json:"rating"`
+	ProductID int    `json:"product_id" binding:"required,gt=0"`
+	Message   string `json:"message" binding:"required,min=3"`
+	Rating    int    `json:"rating" binding:"required,min=1,max=5"`
 }

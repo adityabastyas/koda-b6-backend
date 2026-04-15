@@ -17,15 +17,15 @@ type Transaction struct {
 }
 
 type TransactionInput struct {
-	UserID       int    `json:"user_id"`
+	UserID       int    `json:"user_id" binding:"required,gt=0"`
 	PromoID      *int   `json:"promo_id"`
-	Fullname     string `json:"fullname"`
-	Email        string `json:"email"`
-	Address      string `json:"address"`
-	DeliveryType string `json:"delivery_type"`
-	Subtotal     int    `json:"subtotal"`
-	Tax          int    `json:"tax"`
-	Total        int    `json:"total"`
+	Fullname     string `json:"fullname" binding:"required,min=3"`
+	Email        string `json:"email" binding:"required,email"`
+	Address      string `json:"address" binding:"required,min=5"`
+	DeliveryType string `json:"delivery_type" binding:"required,oneof=DineIn TakeAway Delivery"`
+	Subtotal     int    `json:"subtotal" binding:"required,gt=0"`
+	Tax          int    `json:"tax" binding:"required,gte=0"`
+	Total        int    `json:"total" binding:"required,gt=0"`
 }
 
 // sama persis database
@@ -41,9 +41,9 @@ type TransactionProduct struct {
 
 // nerima data dari request body
 type TransactionProductInput struct {
-	ProductID       int `json:"product_id"`
-	VariantID       int `json:"variant_id"`
-	ProductSizeID   int `json:"product_size_id"`
-	Quantity        int `json:"quantity"`
-	PriceAtPurchase int `json:"price_at_purchase"`
+	ProductID       int `json:"product_id" binding:"required,gt=0"`
+	VariantID       int `json:"variant_id" binding:"required,gt=0"`
+	ProductSizeID   int `json:"product_size_id" binding:"required,gt=0"`
+	Quantity        int `json:"quantity" binding:"required,gt=0"`
+	PriceAtPurchase int `json:"price_at_purchase" binding:"required,gt=0"`
 }

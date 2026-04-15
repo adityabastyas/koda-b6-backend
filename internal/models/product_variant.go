@@ -8,7 +8,7 @@ type ProductVariant struct {
 }
 
 type ProductVariantInput struct {
-	ProductID   int    `json:"product_id"`
-	Temperature string `json:"temperature"`
-	AddPrice    int    `json:"add_price"`
+	ProductID   int    `json:"product_id" binding:"required,gt=0"`
+	Temperature string `json:"temperature" binding:"required,oneof=hot cold ice"`
+	AddPrice    int    `json:"add_price" binding:"gte=0"`
 }

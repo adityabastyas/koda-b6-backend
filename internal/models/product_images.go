@@ -7,6 +7,6 @@ type ProductImages struct {
 }
 
 type ProductImagesInput struct {
-	ProductID int    `json:"product_id"`
-	Path      string `json:"path"`
+	ProductID int    `json:"product_id" binding:"required,gt=0"`
+	Path      string `json:"path" binding:"required"`
 }
