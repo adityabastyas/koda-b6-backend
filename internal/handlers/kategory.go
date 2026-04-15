@@ -81,6 +81,7 @@ func (h *KategoryHandler) Create(ctx *gin.Context) {
 			Success: false,
 			Message: err.Error(),
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, models.Response{
