@@ -27,7 +27,7 @@ func (h *PromoHandler) GetAll(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal mengambil data promo",
 		})
 		return
 	}
@@ -58,8 +58,9 @@ func (h *PromoHandler) GetByID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data promo tidak ditemukan",
 		})
+		return
 	}
 
 	ctx.JSON(http.StatusOK, models.Response{
@@ -91,7 +92,7 @@ func (h *PromoHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan promo",
 		})
 		return
 	}
@@ -133,7 +134,7 @@ func (h *PromoHandler) Update(ctx *gin.Context) {
 	if err := h.service.Update(id, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal update promo",
 		})
 		return
 	}
@@ -164,7 +165,7 @@ func (h *PromoHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus promo",
 		})
 		return
 	}
