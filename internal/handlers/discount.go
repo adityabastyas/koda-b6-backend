@@ -27,7 +27,7 @@ func (h *DiscountHandler) GetAll(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal mengambil data discount",
 		})
 		return
 	}
@@ -58,7 +58,7 @@ func (h *DiscountHandler) GetByID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data discount tidak ditemukan",
 		})
 		return
 	}
@@ -92,7 +92,7 @@ func (h *DiscountHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan discount",
 		})
 		return
 	}
@@ -134,7 +134,7 @@ func (h *DiscountHandler) Update(ctx *gin.Context) {
 	if err := h.service.Update(id, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal update discount",
 		})
 		return
 	}
@@ -165,7 +165,7 @@ func (h *DiscountHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus discount",
 		})
 		return
 	}
