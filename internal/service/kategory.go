@@ -45,7 +45,7 @@ func (s *KategoryService) Update(id int, input models.KategoryInput) error {
 		return errors.New("nama kategory tidak boleh kosong")
 	}
 
-	return s.Update(id, input)
+	return s.repo.Update(id, input)
 }
 
 func (s *KategoryService) Delete(id int) error {
@@ -53,5 +53,5 @@ func (s *KategoryService) Delete(id int) error {
 		return errors.New("id tidak valid")
 	}
 
-	return s.Delete(id)
+	return s.repo.Delete(id)
 }
