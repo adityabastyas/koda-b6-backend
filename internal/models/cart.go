@@ -15,8 +15,8 @@ type CartItem struct {
 }
 
 type CartItemInput struct {
-	ProductID     int `json:"product_id"`
-	VariantID     int `json:"variant_id"`
-	ProductSizeID int `json:"product_size_id"`
-	Quantity      int `json:"quantity"`
+	ProductID     int `json:"product_id" binding:"required,gt=0"`
+	VariantID     int `json:"variant_id" binding:"required,gt=0"`
+	ProductSizeID int `json:"product_size_id" binding:"required,gt=0"`
+	Quantity      int `json:"quantity" binding:"required,gt=0"`
 }
