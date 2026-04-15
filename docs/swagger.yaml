@@ -9,22 +9,44 @@ definitions:
         type: integer
       variant_id:
         type: integer
+    required:
+    - product_id
+    - product_size_id
+    - quantity
+    - variant_id
     type: object
   models.DiscountInput:
     properties:
       description:
+        minLength: 3
         type: string
       discount_rate:
+        maximum: 100
+        minimum: 0
         type: integer
       flash_sale:
         type: boolean
       product_id:
         type: integer
+    required:
+    - description
+    - discount_rate
+    - product_id
     type: object
   models.ForgotPasswordInput:
     properties:
       email:
         type: string
+    required:
+    - email
+    type: object
+  models.KategoryInput:
+    properties:
+      name:
+        minLength: 3
+        type: string
+    required:
+    - name
     type: object
   models.ProductImagesInput:
     properties:
@@ -32,37 +54,60 @@ definitions:
         type: string
       product_id:
         type: integer
+    required:
+    - path
+    - product_id
     type: object
   models.ProductInput:
     properties:
       description:
+        minLength: 5
         type: string
       image_url:
         type: string
       kategory_id:
         type: integer
       name:
+        minLength: 3
         type: string
       price:
         type: integer
+    required:
+    - description
+    - image_url
+    - kategory_id
+    - name
+    - price
     type: object
   models.ProductSizeInput:
     properties:
       add_price:
+        minimum: 0
         type: integer
       name:
         type: string
       product_id:
         type: integer
+    required:
+    - name
+    - product_id
     type: object
   models.ProductVariantInput:
     properties:
       add_price:
+        minimum: 0
         type: integer
       product_id:
         type: integer
       temperature:
+        enum:
+        - hot
+        - cold
+        - ice
         type: string
+    required:
+    - product_id
+    - temperature
     type: object
   models.PromoInput:
     properties:
@@ -71,16 +116,29 @@ definitions:
       discount_value:
         type: integer
       promo_type:
+        enum:
+        - percentage
+        - nominal
         type: string
       title:
+        minLength: 3
         type: string
+    required:
+    - description
+    - discount_value
+    - promo_type
+    - title
     type: object
   models.ResetPasswordInput:
     properties:
       code:
         type: string
       new_password:
+        minLength: 6
         type: string
+    required:
+    - code
+    - new_password
     type: object
   models.Response:
     properties:
@@ -93,32 +151,55 @@ definitions:
   models.ReviewsInput:
     properties:
       message:
+        minLength: 3
         type: string
       product_id:
         type: integer
       rating:
+        maximum: 5
+        minimum: 1
         type: integer
+    required:
+    - message
+    - product_id
+    - rating
     type: object
   models.TransactionInput:
     properties:
       address:
+        minLength: 5
         type: string
       delivery_type:
+        enum:
+        - DineIn
+        - TakeAway
+        - Delivery
         type: string
       email:
         type: string
       fullname:
+        minLength: 3
         type: string
       promo_id:
         type: integer
       subtotal:
         type: integer
       tax:
+        minimum: 0
         type: integer
       total:
         type: integer
       user_id:
         type: integer
+    required:
+    - address
+    - delivery_type
+    - email
+    - fullname
+    - subtotal
+    - tax
+    - total
+    - user_id
     type: object
   models.TransactionProductInput:
     properties:
@@ -132,6 +213,12 @@ definitions:
         type: integer
       variant_id:
         type: integer
+    required:
+    - price_at_purchase
+    - product_id
+    - product_size_id
+    - quantity
+    - variant_id
     type: object
   models.UserLoginInput:
     properties:
@@ -157,6 +244,18 @@ definitions:
     - email
     - full_name
     - password
+    type: object
+  models.UserUpdateInput:
+    properties:
+      address:
+        type: string
+      email:
+        type: string
+      full_name:
+        minLength: 3
+        type: string
+      phone:
+        type: string
     type: object
 info:
   contact: {}
@@ -264,7 +363,11 @@ paths:
         type: integer
       produces:
       - application/json
-      responses: {}
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
       security:
       - BearerAuth: []
       summary: Update quantity item di cart
@@ -288,6 +391,8 @@ paths:
       security:
       - BearerAuth: []
       summary: Ambil semua item di cart berdasarkan user ID
+      tags:
+      - cart-item
     post:
       consumes:
       - application/json
@@ -295,6 +400,7 @@ paths:
       - description: User ID
         in: path
         name: user_id
+        required: true
         type: integer
       - description: Cart Item Input
         in: body
@@ -446,6 +552,98 @@ paths:
       summary: Edit discount
       tags:
       - discount
+  /kategorys:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua kategory
+      tags:
+      - kategory
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: Kategory Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.KategoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Tambah kategory baru
+      tags:
+      - kategory
+  /kategorys/{id}:
+    delete:
+      parameters:
+      - description: Kategory ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Hapus kategory
+      tags:
+      - kategory
+    get:
+      parameters:
+      - description: Kategory ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil kategory berdasarkan ID
+      tags:
+      - kategory
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: Kategory ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Kategory Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.KategoryInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Update kategory
+      tags:
+      - kategory
   /product-images:
     post:
       consumes:
@@ -961,6 +1159,18 @@ paths:
       summary: Register user baru
       tags:
       - auth
+  /reviews:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua review
+      tags:
+      - reviews
   /reviews/{id}:
     delete:
       parameters:
@@ -1210,4 +1420,61 @@ paths:
       summary: Ambil semua transaction berdasarkan user ID
       tags:
       - transaction
+  /users:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      summary: Ambil semua user
+      tags:
+      - user
+  /users/profile:
+    patch:
+      consumes:
+      - application/json
+      parameters:
+      - description: User Update Input
+        in: body
+        name: input
+        required: true
+        schema:
+          $ref: '#/definitions/models.UserUpdateInput'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Update profile user
+      tags:
+      - user
+  /users/upload-photo:
+    post:
+      consumes:
+      - multipart/form-data
+      parameters:
+      - description: Image File
+        in: formData
+        name: file
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Response'
+      security:
+      - BearerAuth: []
+      summary: Upload foto profile
+      tags:
+      - user
 swagger: "2.0"

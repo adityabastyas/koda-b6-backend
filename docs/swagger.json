@@ -172,7 +172,14 @@
                         "required": true
                     }
                 ],
-                "responses": {}
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
             }
         },
         "/cart-items/{user_id}": {
@@ -184,6 +191,9 @@
                 ],
                 "produces": [
                     "application/json"
+                ],
+                "tags": [
+                    "cart-item"
                 ],
                 "summary": "Ambil semua item di cart berdasarkan user ID",
                 "parameters": [
@@ -225,7 +235,8 @@
                         "type": "integer",
                         "description": "User ID",
                         "name": "user_id",
-                        "in": "path"
+                        "in": "path",
+                        "required": true
                     },
                     {
                         "description": "Cart Item Input",
@@ -448,6 +459,148 @@
                         "required": true,
                         "schema": {
                             "$ref": "#/definitions/models.DiscountInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/kategorys": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kategory"
+                ],
+                "summary": "Ambil semua kategory",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kategory"
+                ],
+                "summary": "Tambah kategory baru",
+                "parameters": [
+                    {
+                        "description": "Kategory Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.KategoryInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/kategorys/{id}": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kategory"
+                ],
+                "summary": "Ambil kategory berdasarkan ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Kategory ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kategory"
+                ],
+                "summary": "Hapus kategory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Kategory ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "kategory"
+                ],
+                "summary": "Update kategory",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Kategory ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Kategory Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.KategoryInput"
                         }
                     }
                 ],
@@ -1284,6 +1437,25 @@
                 }
             }
         },
+        "/reviews": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "reviews"
+                ],
+                "summary": "Ambil semua review",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
         "/reviews/product/{product_id}": {
             "get": {
                 "produces": [
@@ -1690,11 +1862,110 @@
                     }
                 }
             }
+        },
+        "/users": {
+            "get": {
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Ambil semua user",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/profile": {
+            "patch": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Update profile user",
+                "parameters": [
+                    {
+                        "description": "User Update Input",
+                        "name": "input",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.UserUpdateInput"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/upload-photo": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "consumes": [
+                    "multipart/form-data"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "user"
+                ],
+                "summary": "Upload foto profile",
+                "parameters": [
+                    {
+                        "type": "file",
+                        "description": "Image File",
+                        "name": "file",
+                        "in": "formData",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Response"
+                        }
+                    }
+                }
+            }
         }
     },
     "definitions": {
         "models.CartItemInput": {
             "type": "object",
+            "required": [
+                "product_id",
+                "product_size_id",
+                "quantity",
+                "variant_id"
+            ],
             "properties": {
                 "product_id": {
                     "type": "integer"
@@ -1712,12 +1983,20 @@
         },
         "models.DiscountInput": {
             "type": "object",
+            "required": [
+                "description",
+                "discount_rate",
+                "product_id"
+            ],
             "properties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 3
                 },
                 "discount_rate": {
-                    "type": "integer"
+                    "type": "integer",
+                    "maximum": 100,
+                    "minimum": 0
                 },
                 "flash_sale": {
                     "type": "boolean"
@@ -1729,14 +2008,33 @@
         },
         "models.ForgotPasswordInput": {
             "type": "object",
+            "required": [
+                "email"
+            ],
             "properties": {
                 "email": {
                     "type": "string"
                 }
             }
         },
+        "models.KategoryInput": {
+            "type": "object",
+            "required": [
+                "name"
+            ],
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "minLength": 3
+                }
+            }
+        },
         "models.ProductImagesInput": {
             "type": "object",
+            "required": [
+                "path",
+                "product_id"
+            ],
             "properties": {
                 "path": {
                     "type": "string"
@@ -1748,9 +2046,17 @@
         },
         "models.ProductInput": {
             "type": "object",
+            "required": [
+                "description",
+                "image_url",
+                "kategory_id",
+                "name",
+                "price"
+            ],
             "properties": {
                 "description": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 5
                 },
                 "image_url": {
                     "type": "string"
@@ -1759,7 +2065,8 @@
                     "type": "integer"
                 },
                 "name": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 3
                 },
                 "price": {
                     "type": "integer"
@@ -1768,9 +2075,14 @@
         },
         "models.ProductSizeInput": {
             "type": "object",
+            "required": [
+                "name",
+                "product_id"
+            ],
             "properties": {
                 "add_price": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "name": {
                     "type": "string"
@@ -1782,20 +2094,36 @@
         },
         "models.ProductVariantInput": {
             "type": "object",
+            "required": [
+                "product_id",
+                "temperature"
+            ],
             "properties": {
                 "add_price": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "product_id": {
                     "type": "integer"
                 },
                 "temperature": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "hot",
+                        "cold",
+                        "ice"
+                    ]
                 }
             }
         },
         "models.PromoInput": {
             "type": "object",
+            "required": [
+                "description",
+                "discount_value",
+                "promo_type",
+                "title"
+            ],
             "properties": {
                 "description": {
                     "type": "string"
@@ -1804,21 +2132,31 @@
                     "type": "integer"
                 },
                 "promo_type": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "percentage",
+                        "nominal"
+                    ]
                 },
                 "title": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 3
                 }
             }
         },
         "models.ResetPasswordInput": {
             "type": "object",
+            "required": [
+                "code",
+                "new_password"
+            ],
             "properties": {
                 "code": {
                     "type": "string"
                 },
                 "new_password": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 6
                 }
             }
         },
@@ -1836,32 +2174,57 @@
         },
         "models.ReviewsInput": {
             "type": "object",
+            "required": [
+                "message",
+                "product_id",
+                "rating"
+            ],
             "properties": {
                 "message": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 3
                 },
                 "product_id": {
                     "type": "integer"
                 },
                 "rating": {
-                    "type": "integer"
+                    "type": "integer",
+                    "maximum": 5,
+                    "minimum": 1
                 }
             }
         },
         "models.TransactionInput": {
             "type": "object",
+            "required": [
+                "address",
+                "delivery_type",
+                "email",
+                "fullname",
+                "subtotal",
+                "tax",
+                "total",
+                "user_id"
+            ],
             "properties": {
                 "address": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 5
                 },
                 "delivery_type": {
-                    "type": "string"
+                    "type": "string",
+                    "enum": [
+                        "DineIn",
+                        "TakeAway",
+                        "Delivery"
+                    ]
                 },
                 "email": {
                     "type": "string"
                 },
                 "fullname": {
-                    "type": "string"
+                    "type": "string",
+                    "minLength": 3
                 },
                 "promo_id": {
                     "type": "integer"
@@ -1870,7 +2233,8 @@
                     "type": "integer"
                 },
                 "tax": {
-                    "type": "integer"
+                    "type": "integer",
+                    "minimum": 0
                 },
                 "total": {
                     "type": "integer"
@@ -1882,6 +2246,13 @@
         },
         "models.TransactionProductInput": {
             "type": "object",
+            "required": [
+                "price_at_purchase",
+                "product_id",
+                "product_size_id",
+                "quantity",
+                "variant_id"
+            ],
             "properties": {
                 "price_at_purchase": {
                     "type": "integer"
@@ -1933,6 +2304,24 @@
                 "password": {
                     "type": "string",
                     "minLength": 6
+                }
+            }
+        },
+        "models.UserUpdateInput": {
+            "type": "object",
+            "properties": {
+                "address": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "full_name": {
+                    "type": "string",
+                    "minLength": 3
+                },
+                "phone": {
+                    "type": "string"
                 }
             }
         }
