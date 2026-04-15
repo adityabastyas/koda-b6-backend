@@ -25,9 +25,10 @@ func (s *ProductService) GetAll() ([]models.Product, error) {
 
 	if err == nil {
 		var cached []models.Product
-		json.Unmarshal([]byte(val), &cached)
-		fmt.Println("ambil dari redis 🔥")
-		return cached, nil
+		if err := json.Unmarshal([]byte(val), &cached); err == nil {
+			fmt.Println("ambil dari redis 🔥")
+			return cached, nil
+		}
 	}
 
 	// 2. kalau tidak ada → ambil DB
