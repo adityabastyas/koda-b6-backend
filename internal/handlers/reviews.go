@@ -39,7 +39,7 @@ func (h *ReviewsHandler) GetByProductID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data review tidak ditemukan",
 		})
 		return
 	}
@@ -72,7 +72,7 @@ func (h *ReviewsHandler) GetByUserID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data review tidak ditemukan",
 		})
 		return
 	}
@@ -115,7 +115,7 @@ func (h *ReviewsHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(userID, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan review",
 		})
 		return
 	}
@@ -146,7 +146,7 @@ func (h *ReviewsHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus review",
 		})
 		return
 	}
@@ -157,12 +157,17 @@ func (h *ReviewsHandler) Delete(ctx *gin.Context) {
 	})
 }
 
+// @Summary Ambil semua review
+// @Tags reviews
+// @Produce json
+// @Success 200 {object} models.Response
+// @Router /reviews [get]
 func (h *ReviewsHandler) GetAll(ctx *gin.Context) {
 	reviews, err := h.service.GetAll()
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal mengambil data review",
 		})
 		return
 	}
