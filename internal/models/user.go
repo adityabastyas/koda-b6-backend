@@ -6,7 +6,7 @@ type User struct {
 	UserID     int       `json:"user_id" db:"user_id"`
 	FullName   string    `json:"full_name" db:"full_name"`
 	Email      string    `json:"email" db:"email"`
-	Password   string    `json:"password" db:"password"`
+	Password   string    `json:"-" db:"password"`
 	Address    *string   `json:"address" db:"address"`
 	Phone      *string   `json:"phone" db:"phone"`
 	ProfilePic *string   `json:"profile_pic" db:"profile_pic"`
@@ -32,8 +32,8 @@ type Response struct {
 }
 
 type UserUpdateInput struct {
-	FullName string  `json:"full_name"`
-	Email    string  `json:"email"`
-	Phone    *string `json:"phone"`
-	Address  *string `json:"address"`
+	FullName string  `json:"full_name" binding:"omitempty,min=3"`
+	Email    string  `json:"email" binding:"omitempty,email"`
+	Phone    *string `json:"phone" binding:"omitempty"`
+	Address  *string `json:"address" binding:"omitempty"`
 }
