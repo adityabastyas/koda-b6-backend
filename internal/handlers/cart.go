@@ -28,7 +28,7 @@ func (h *CartHandler) GetAll(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusInternalServerError, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal mengambil data cart",
 		})
 		return
 	}
@@ -60,7 +60,7 @@ func (h *CartHandler) GetByUserID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data cart tidak ditemukan",
 		})
 		return
 	}
