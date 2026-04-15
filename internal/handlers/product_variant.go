@@ -39,7 +39,7 @@ func (h *ProductVariantHandler) GetByProductID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data variant tidak ditemukan",
 		})
 		return
 	}
@@ -71,7 +71,7 @@ func (h *ProductVariantHandler) GetByID(ctx *gin.Context) {
 	if err != nil {
 		ctx.JSON(http.StatusNotFound, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "data variant tidak ditemukan",
 		})
 		return
 	}
@@ -105,7 +105,7 @@ func (h *ProductVariantHandler) Create(ctx *gin.Context) {
 	if err := h.service.Create(input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menambahkan variant",
 		})
 		return
 	}
@@ -147,7 +147,7 @@ func (h *ProductVariantHandler) Update(ctx *gin.Context) {
 	if err := h.service.Update(id, input); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal update variant",
 		})
 		return
 	}
@@ -178,7 +178,7 @@ func (h *ProductVariantHandler) Delete(ctx *gin.Context) {
 	if err := h.service.Delete(id); err != nil {
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
-			Message: err.Error(),
+			Message: "gagal menghapus variant",
 		})
 		return
 	}
