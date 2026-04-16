@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"koda-b6-backend1/internal/models"
 
 	"github.com/jackc/pgx/v5"
@@ -73,12 +74,14 @@ func (r *TransactionRepository) Create(input models.TransactionInput) (*models.T
 
 	rows, err := r.DB.Query(context.Background(), query, input.UserID, input.PromoID, input.Fullname, input.Email, input.Address, input.DeliveryType, input.Subtotal, input.Tax, input.Total)
 	if err != nil {
+		fmt.Println("TransactionRepository", err)
 		return nil, err
 	}
 	defer rows.Close()
 
 	transaction, err := pgx.CollectOneRow(rows, pgx.RowToStructByName[models.Transaction])
 	if err != nil {
+		fmt.Println("TransactionRepository2", err)
 		return nil, err
 	}
 

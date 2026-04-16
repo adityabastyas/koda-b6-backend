@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 	"koda-b6-backend1/internal/models"
 
 	"github.com/jackc/pgx/v5"
@@ -39,6 +40,7 @@ func (r *TransactionProductRepository) Create(transactionID int, input models.Tr
 	query := `INSERT INTO transaction_product (transaction_id, product_id, variant_id, product_size_id, quantity, price_at_purchase) VALUES ($1, $2, $3, $4, $5, $6)`
 
 	_, err := r.DB.Exec(context.Background(), query, transactionID, input.ProductID, input.VariantID, input.ProductSizeID, input.Quantity, input.PriceAtPurchase)
+	fmt.Println("TransactionProductRepository", err)
 	return err
 }
 

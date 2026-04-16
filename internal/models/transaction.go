@@ -17,15 +17,15 @@ type Transaction struct {
 }
 
 type TransactionInput struct {
-	UserID       int    `json:"user_id" binding:"required,gt=0"`
+	UserID       int    `json:"user_id"`
 	PromoID      *int   `json:"promo_id"`
-	Fullname     string `json:"fullname" binding:"required,min=3"`
-	Email        string `json:"email" binding:"required,email"`
-	Address      string `json:"address" binding:"required,min=5"`
-	DeliveryType string `json:"delivery_type" binding:"required,oneof=DineIn TakeAway Delivery"`
-	Subtotal     int    `json:"subtotal" binding:"required,gt=0"`
-	Tax          int    `json:"tax" binding:"required,gte=0"`
-	Total        int    `json:"total" binding:"required,gt=0"`
+	Fullname     string `json:"fullname"`
+	Email        string `json:"email"`
+	Address      string `json:"address"`
+	DeliveryType string `json:"delivery_type"`
+	Subtotal     int    `json:"subtotal"`
+	Tax          int    `json:"tax"`
+	Total        int    `json:"total"`
 }
 
 // sama persis database

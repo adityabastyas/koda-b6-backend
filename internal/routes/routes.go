@@ -75,7 +75,7 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	cartGroup.GET("/:user_id", cartHandler.GetByUserID)
 
 	// transaction
-	transactionGroup := r.Group("transactions")
+	transactionGroup := r.Group("/transactions")
 	transactionGroup.Use(lib.AuthMiddleware())
 	transactionGroup.GET("", transactionHandler.GetAll)
 	transactionGroup.GET("/:id", transactionHandler.GetByID)

@@ -121,6 +121,7 @@ func (h *TransactionHandler) Create(ctx *gin.Context) {
 	var input models.TransactionInput
 
 	if err := ctx.ShouldBindJSON(&input); err != nil {
+		fmt.Println("error TransactionHandler", err)
 		ctx.JSON(http.StatusBadRequest, models.Response{
 			Success: false,
 			Message: "invalid body",
