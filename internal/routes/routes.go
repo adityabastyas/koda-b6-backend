@@ -133,5 +133,4 @@ func SetupRoutes(r *gin.Engine, authHandler *handlers.AuthHandler, userHandler *
 	reviewsGroup.GET("/user/:user_id", reviewsHandler.GetByUserID)
 	reviewsGroup.POST("/:user_id", reviewsHandler.Create)
 	reviewsGroup.DELETE("/:id", reviewsHandler.Delete)
-
 }
